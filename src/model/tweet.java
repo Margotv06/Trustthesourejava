@@ -9,8 +9,6 @@ public class tweet  {
     private String message;
     private int retweets;
     private URL url;
-    private String hashtag
-
-
+    private String hashtag;
 
 }

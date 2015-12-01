@@ -35,30 +35,27 @@ public class TweetGrabber
 
     private static String keyTable(String key){
         switch (key){
+            // Returns the actual content of the tweet
             case "tweet":
                 return "p.js-tweet-text.tweet-text";
-            case "location":
-                return "ProfileHeaderCard-locationText";
-            case "registered":
-                return "ProfileHeaderCard-joinDateText";
-            case "description":
-                return "ProfileHeaderCard-bio";
+            // Returns the profilename
             case "profilename":
-                return "ProfileHeaderCard-nameLink";
-            /*case "":
-                break;
-            case "":
-                break;
-            case "":
-                break;
-            case "":
-                break;
-            case "":
-                break;
-            case "":
-                break;
-            case "":
-                break;*/
+                return "strong.js-action-profile-name";
+            // Returns the username
+            case "username":
+                return "span.js-action-profile-name";
+            // Returns the amount of retweets (in String)
+            // example: "Retweets: (number of RT)"
+            case "retweets":
+                return "li.js-stat-retweets";
+            // Returns the amount of likes/favorites (in String)
+            // example: "Retweets: (number of RT)"
+            case "likes":
+            case "favorites":
+                return "li.js-stat-favorites";
+            // example: "Retweets: (number of RT)"
+            case "time":
+                return "span.metadata";
         }
         return key;
     }
