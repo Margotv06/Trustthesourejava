@@ -45,7 +45,7 @@ public class WebClientConn {
                     line+=a+ "|";
                 }
                 System.out.println(line);
-                TweetGrabber.TweetGrabber(args[1]);
+                TweetGrabber.TweetGrabber(args[1],session, args[2]);
                 break;
             case "GET_COUNTRY":
                 for(String a: args){
