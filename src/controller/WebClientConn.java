@@ -1,5 +1,6 @@
 package controller;
 
+import model.Tweet;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
@@ -47,11 +48,11 @@ public class WebClientConn {
                 System.out.println(line);
                 TweetGrabber.TweetGrabber(args[1],session, args[2]);
                 break;
-            case "GET_COUNTRY":
+            case "MAKE":
                 for(String a: args){
                     line+=a+ "|";
                 }
-                args[1].replaceAll("_"," ");
+                TweetGrabber.TweetGrabber(args[1],session);
                 System.out.println(line);
 
                 break;

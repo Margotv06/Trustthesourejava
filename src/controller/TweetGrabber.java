@@ -4,14 +4,23 @@ package controller;
  * Created by pjvan on 30-11-2015.
  */
 import java.io.*;
+import java.util.ArrayList;
 
+import model.Tweet;
 import org.eclipse.jetty.websocket.api.Session;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class TweetGrabber
-{
+
+public class TweetGrabber{
+    private static ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+
+
+    public static void TweetGrabber(String url, Session session){
+        new Tweet().Tweet(url,session);
+    }
+
     public static void TweetGrabber(String url, Session session, String key){
         Document doc = null;
         key = keyTable(key);
