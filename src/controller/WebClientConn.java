@@ -5,6 +5,8 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 import java.io.IOException;
+import model.Tweet;
+
 
 /**
  * Created by pjvan on 30-11-2015.
@@ -48,14 +50,13 @@ public class WebClientConn {
                 System.out.println(line);
                 TweetGrabber.TweetGrabber(args[1],session, args[2]);
                 break;
-            case "MAKE":
+            /* case "MAKE":
                 for(String a: args){
                     line+=a+ "|";
                 }
                 TweetGrabber.TweetGrabber(args[1],session);
                 System.out.println(line);
-
-                break;
+            */
 
             default:
                 try {
