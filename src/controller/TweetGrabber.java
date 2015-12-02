@@ -37,7 +37,10 @@ public class TweetGrabber{
         for(String hashtag : tweet.getHashtag()){
             System.out.println(hashtag);
         }
-        System.out.println(tweet.getRetweets());
+        System.out.println("Amount of retweets: "+tweet.getRetweets());
+        System.out.println("Amount of likes: "+tweet.getLikes());
+        System.out.println("Username: "+tweet.getUsername());
+        System.out.println("Profilename: "+tweet.getProfilename());
 
         // let's send the message back to the web
         sendMessage(tweet.getMessage(), session);
