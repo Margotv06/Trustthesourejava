@@ -16,7 +16,7 @@ import org.jsoup.nodes.Element;
 public class TweetGrabber{
     private static ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
-    public static void TweetGrabber(String url, Session session, String key){
+    public static void TweetGrabber(String url, Session session){
 
         // Getting the page
         Document doc = null;
@@ -28,15 +28,16 @@ public class TweetGrabber{
         }
 
         // Getting the tweet
-        Element tweetText = doc.select("p.js-tweet-text.tweet-text").first();
+        Element tweetText = getInfo("tweet", doc);
 
         // Making a tweet object with the text
-        Tweet tweet = new Tweet(tweetText.text());
+        Tweet tweet = new Tweet(tweetText.text(), doc);
         // for testing purposes
         // prints out all the hashtags in a tweet
         for(String hashtag : tweet.getHashtag()){
             System.out.println(hashtag);
         }
+        System.out.println(tweet.getRetweets());
 
         // let's send the message back to the web
         sendMessage(tweet.getMessage(), session);
@@ -59,8 +60,16 @@ public class TweetGrabber{
         return true;
     }
 
+    /*
+    Method for getting information from the DOM
+     */
+    public static Element getInfo(String key, Document doc){
 
-    public static String keyTable(String key){
+        return doc.select(keyTable(key)).first();
+    }
+
+
+    private static String keyTable(String key){
         switch (key){
             // Returns the actual content of the tweet
             case "tweet":

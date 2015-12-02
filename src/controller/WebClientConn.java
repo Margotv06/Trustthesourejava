@@ -48,7 +48,7 @@ public class WebClientConn {
                     line+=a+ "|";
                 }
                 System.out.println(line);
-                TweetGrabber.TweetGrabber(args[1],session, args[2]);
+                TweetGrabber.TweetGrabber(args[1],session);
                 break;
             /* case "MAKE":
                 for(String a: args){
