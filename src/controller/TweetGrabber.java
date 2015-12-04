@@ -41,6 +41,7 @@ public class TweetGrabber{
         System.out.println("Amount of likes: "+tweet.getLikes());
         System.out.println("Username: "+tweet.getUsername());
         System.out.println("Profilename: "+tweet.getProfilename());
+        System.out.println("Time: "+tweet.getTime());
 
         // let's send the message back to the web
         sendMessage(tweet.getMessage(), session);
