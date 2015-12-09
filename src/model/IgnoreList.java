@@ -17,7 +17,8 @@ public class IgnoreList {
                 "links", "rechts", "nu", "via", "ben", "jij", "nou", "een", "in", "uit", "wij",
                 "te", "is", "ten", "als", "door", "van", "den", "de", "aan", "heb", "waar",
                 "dus", "ook", "ter", "op", "word", "wordt", "mee", "naar", "iets", "zoals", "was",
-                "ooit", "ligt", "er", "bij", "nog", "net", "voor", "om", "af", "kan", "zo"};
+                "ooit", "ligt", "er", "bij", "nog", "net", "voor", "om", "af", "kan", "zo",
+                "dan", "ene"};
         return ignoreList;
     }
     /*
