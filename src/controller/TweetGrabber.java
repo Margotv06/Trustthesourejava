@@ -32,16 +32,6 @@ public class TweetGrabber{
 
         // Making a tweet object with the text
         Tweet tweet = new Tweet(tweetText.text(), doc);
-        // for testing purposes
-        // prints out all the hashtags in a tweet
-        for(String hashtag : tweet.getHashtag()){
-            System.out.println(hashtag);
-        }
-        System.out.println("Amount of retweets: "+tweet.getRetweets());
-        System.out.println("Amount of likes: "+tweet.getLikes());
-        System.out.println("Username: "+tweet.getUsername());
-        System.out.println("Profilename: "+tweet.getProfilename());
-        System.out.println("Time: "+tweet.getTime());
 
         // let's send the message back to the web
         sendMessage(tweet.getMessage(), session);
