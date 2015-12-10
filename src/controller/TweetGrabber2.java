@@ -8,7 +8,10 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 import org.json.JSONObject;
 
@@ -19,18 +22,19 @@ import org.json.JSONObject;
  */
 public class TweetGrabber2 implements Runnable {
     private String link;
-    private JSONObject message;
+    //private static List<JSONObject> message= Collections.synchronizedList(new LinkedList<>());
+    private Stack<JSONObject> message;
     private JSONObject command;
     private String search;
     private Thread grabber;
     private static final String LINK = "https://www.twitter.com/",
-            SEARCH = "search?",
+            SEARCH = "search?q=",
             // Here needs to be a search question
             SRC = "&src=typd";
     private Document document;
     private LinkedList<Document> documents;
 
-    public TweetGrabber2(JSONObject message) {
+    public TweetGrabber2(Stack<JSONObject> message) {
         this.message = message;
         documents = new LinkedList<Document>();
         System.out.println("TweetGrabber Initialized");
@@ -50,43 +54,43 @@ public class TweetGrabber2 implements Runnable {
     }
 
     private synchronized JSONObject checkCommand() {
-        if(message.length()!=0)
-            System.out.println(message.toString());
-
-        return message;
+        if(message.size()!=0)
+            return message.pop();
+        return null;
 
     }
 
     private void execute(JSONObject command) {
-        try {
-            if(command!=null)
-                if(command.length()!=0){
-                    command.names().toString();
+        if(command!=null) {
+            try {
+                if (command != null)
+                    if (command.length() != 0) {
+                        command.names().toString();
+                    }
+                if (command.has("search")) {
+                    System.out.println("Search request received");
+                    search = URLEncoder.encode(command.getString("search"), "UTF-8");
+                    System.out.println("TEST: search URL=" + search);
                 }
-            if (command.has("search")) {
-                System.out.println("Search request received");
-                search = URLEncoder.encode(command.getString("search"), "UTF-8");
-                System.out.println("TEST: search URL=" + search);
-            }
 
-            if (command.has("GET")) {
-                System.out.println("TEST: starting first fetch");
-                getFirstDoc();
-                if (command.get("GET").equals("ALL")) {
-                    grabber = new Thread(new TweetContinueGrabber(search, document, documents));
-                    grabber.start();
+                if (command.has("GET")) {
+                    System.out.println("TEST: starting first fetch");
+                    getFirstDoc();
+                    if (command.get("GET").equals("ALL")) {
+                        grabber = new Thread(new TweetContinueGrabber(search, document, documents));
+                        grabber.start();
+                    }
                 }
+                if (command.has("STOP")) {
+                    grabber.interrupt();
+                }
+                if (command.has("CONTINUE")) {
+                    grabber.notify();
+                }
+            } catch (JSONException | UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-            if (command.has("STOP")){
-                grabber.interrupt();
-            }
-            if(command.has("CONTINUE")){
-                grabber.notify();
-            }
-        } catch (JSONException | UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
-
     }
 
     private void getFirstDoc() {
@@ -114,16 +118,16 @@ public class TweetGrabber2 implements Runnable {
 class TweetContinueGrabber implements Runnable{
     private String search;
     private LinkedList<Document> documents;
-    private Document document;
+    private  Document document;
     private String link;
     private int counted;
-    private static final String BASEURL = "https://www.twitter.com/i/search/timeline?vertical=default",
+    private static final String BASEURL = "https://www.twitter.com/i/search/timeline?vertical=default&q=",
         // searchQuestion here
         SRC = "&src=typd",
         COMPOSED = "&composed_count=",
         INCLUDE_ENT = "&include_entities=1&include_new_items_bar=true&interval=30000",
         LATENT = "&latent_count=",
-        MINPOS = "$max_postition=";
+        MINPOS = "&max_position=";
     private String minpos;
 
     public TweetContinueGrabber(String search, Document document, LinkedList<Document> documents){
@@ -134,6 +138,9 @@ class TweetContinueGrabber implements Runnable{
         counted = document.select(".js-tweet-text.tweet-text").size();
         minpos = getMinPos(document);
         System.out.println("TweetContinueGrabber Inititalized");
+        if(document!=null){
+            System.out.println("Has Document");
+        }
     }
 
     public void run() {
@@ -172,8 +179,12 @@ class TweetContinueGrabber implements Runnable{
     private int getLatend(Document document){
         return 0;
     }
+
     private String getMinPos(Document document){
-        return document.getElementsByAttribute("data-min-position").attr("data-min-position");
+        if(document.getElementsByAttribute("data-min-position").attr("data-min-position")!=null){
+            return document.getElementsByAttribute("data-min-position").attr("data-min-position");
+        }
+        return document.getElementsByAttribute("data-max-position").attr("data-max-position");
     }
     private static String readAll(Reader reader) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();

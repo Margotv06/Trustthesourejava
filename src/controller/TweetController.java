@@ -1,11 +1,9 @@
 package controller;
 
 import model.Tweet;
-import org.eclipse.jetty.websocket.api.Session;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
@@ -15,17 +13,18 @@ public class TweetController {
     private ArrayList<Tweet> tweets;
     private HashMap<String,ArrayList<Tweet>> keywords;
     private Thread tweetGrabber;
-    private JSONObject message;
+    //private List<JSONObject> grabberCommand = Collections.synchronizedList(new LinkedList<JSONObject>());
+    private Stack<JSONObject> grabberCommand = new Stack<>();
 
     public TweetController(){
-            message = new JSONObject();
-            tweetGrabber = new Thread(new TweetGrabber2(message));
+
+            tweetGrabber = new Thread(new TweetGrabber2(grabberCommand));
             tweetGrabber.start();
 
     }
 
     public synchronized void sendCommand(JSONObject command){
         System.out.println("Got Command");
-        message = command;
+        grabberCommand.add(command);
     }
 }

@@ -49,7 +49,7 @@ public class WebClientConn {
             System.out.println(commands);
             switch(commands){
                 case "get":
-                    session.getRemote().sendString("GOt Get Command");
+                    session.getRemote().sendString("Got Get Command");
                     tweetController.sendCommand(jsonObject);
                     break;
                 case "":
