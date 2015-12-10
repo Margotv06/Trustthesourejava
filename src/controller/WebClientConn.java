@@ -5,7 +5,11 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 import java.io.IOException;
+import java.util.UUID;
+
 import model.Tweet;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -13,7 +17,7 @@ import model.Tweet;
  */
 @WebSocket
 public class WebClientConn {
-
+    private TweetController tweetController = new TweetController();
     /**
      * Handling a closed connection
      * @param session session of request
@@ -39,31 +43,25 @@ public class WebClientConn {
      */
     @OnWebSocketMessage
     public void onMessage(Session session, String command){
-        String[] args = command.split(" ");
-        String line="";
-        switch (args[0]) {
-            case "GET":
+        try {
+            JSONObject jsonObject = new JSONObject(command);
+            String commands = jsonObject.get("COMMAND").toString();
+            System.out.println(commands);
+            switch(commands){
+                case "get":
+                    session.getRemote().sendString("GOt Get Command");
+                    tweetController.sendCommand(jsonObject);
+                    break;
+                case "":
+                    session.getRemote().sendString("No Command");
+                    break;
+                default:
+                    session.getRemote().sendString("Invallid Command");
+                    break;
+            }
 
-                for(String a: args){
-                    line+=a+ "|";
-                }
-                System.out.println(line);
-                TweetGrabber.TweetGrabber(args[1],session);
-                break;
-            /* case "MAKE":
-                for(String a: args){
-                    line+=a+ "|";
-                }
-                TweetGrabber.TweetGrabber(args[1],session);
-                System.out.println(line);
-            */
-
-            default:
-                try {
-                    session.getRemote().sendString("invalid command.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        }catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
     }
 
