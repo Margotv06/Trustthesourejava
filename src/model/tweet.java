@@ -3,6 +3,8 @@ package model;
 import controller.TweetGrabber;
 import org.eclipse.jetty.websocket.api.Session;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.* ;
@@ -14,6 +16,7 @@ import java.util.Locale;
 public class Tweet
 {
     private String message;
+    private ArrayList<String> messageWords;
     private int retweets;
     private int likes;
     private Date time;
@@ -37,13 +40,59 @@ public class Tweet
         this.userName = userName();
         this.profileName = profileName();
         this.time = time();
+        getKeyWords(message);
+    }
+
+    /*
+    Searches for the keywords in the tweet and returns them
+     */
+    private ArrayList<String> getKeyWords(String message) {
+        message = message.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase();
+        ArrayList<String> messageWords = new ArrayList<String>(50);
+        String[] messageArray = message.split(" ");
+
+        for (String word: messageArray) {
+            if (checkWord(word)) {
+                messageWords.add(word);
+            }
+        }
+        System.out.println(messageWords);
+        System.out.println(this.message);
+        return messageWords;
+    }
+    /*
+    checks if a string is in the ignore list
+    returns false if word is  in ignoreList
+     */
+    private boolean checkWord(String word) {
+        String[] ignoreList = IgnoreList.getIgnoreList();
+
+        for (String ignoreWord: ignoreList) {
+            if (ignoreWord.equals(word)) {
+                return false;
+            }
+            if (word.contains("http")) {
+                return false;
+            }
+            if (word.contains("pic")) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /*
     Search for the amount of retweets a tweet has
      */
     private int retweets(){
-        String retweetsString = TweetGrabber.getInfo("retweets", doc).text();
+
+        Element element = IgnoreList.getInfo("retweets", doc);
+
+        if (element == null) {
+            return 0;
+        }
+
+        String retweetsString = element.text();
         retweetsString = retweetsString.replaceAll("\\D+","");
         return Integer.parseInt(retweetsString);
     }
@@ -52,7 +101,7 @@ public class Tweet
     Search for the timestamp of the tweet
      */
     private Date time(){
-        String timeString = TweetGrabber.getInfo("time", doc).text();
+        String timeString = IgnoreList.getInfo("time", doc).text();
         String[] arrayTimeString = timeString.split(" ");
         String dateString = month(arrayTimeString[3]);
         dateString += " ";
@@ -74,7 +123,13 @@ public class Tweet
     Search for the amount of likes a tweet has
      */
     private int likes(){
-        String likesString = TweetGrabber.getInfo("likes", doc).text();
+        Element element = IgnoreList.getInfo("likes", doc);
+
+        if (element == null) {
+            return 0;
+        }
+
+        String likesString = element.text();
         likesString = likesString.replaceAll("\\D+","");
         return Integer.parseInt(likesString);
 
@@ -84,13 +139,13 @@ public class Tweet
     Search for the username of the tweet
      */
     private String userName(){
-        return TweetGrabber.getInfo("username", doc).text();
+        return IgnoreList.getInfo("username", doc).text();
     }
     /*
     Search for the profilename of the tweet
      */
     private String profileName(){
-        return TweetGrabber.getInfo("profilename", doc).text();
+        return IgnoreList.getInfo("profilename", doc).text();
     }
 
     /*
