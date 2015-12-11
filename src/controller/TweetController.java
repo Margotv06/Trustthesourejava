@@ -19,7 +19,7 @@ public class TweetController {
     private LinkedList<Document> documents;
 
     public TweetController(){
-            LinkedList<Document> documents = new LinkedList<Document>();
+            documents = new LinkedList<Document>();
             tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
             tweetGrabber.start();
 
