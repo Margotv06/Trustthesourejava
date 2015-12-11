@@ -34,9 +34,9 @@ public class TweetGrabber2 implements Runnable {
     private Document document;
     private LinkedList<Document> documents;
 
-    public TweetGrabber2(Stack<JSONObject> message) {
+    public TweetGrabber2(Stack<JSONObject> message, LinkedList<Document> documents) {
         this.message = message;
-        documents = new LinkedList<Document>();
+        this.documents = documents;
         System.out.println("TweetGrabber Initialized");
     }
 

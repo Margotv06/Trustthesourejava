@@ -2,6 +2,7 @@ package controller;
 
 import model.Tweet;
 import org.json.JSONObject;
+import org.jsoup.nodes.Document;
 
 import java.util.*;
 
@@ -15,10 +16,11 @@ public class TweetController {
     private Thread tweetGrabber;
     //private List<JSONObject> grabberCommand = Collections.synchronizedList(new LinkedList<JSONObject>());
     private Stack<JSONObject> grabberCommand = new Stack<>();
+    private LinkedList<Document> documents;
 
     public TweetController(){
-
-            tweetGrabber = new Thread(new TweetGrabber2(grabberCommand));
+            LinkedList<Document> documents = new LinkedList<Document>();
+            tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
             tweetGrabber.start();
 
     }
