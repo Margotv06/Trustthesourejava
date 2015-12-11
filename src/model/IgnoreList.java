@@ -1,9 +1,9 @@
 package model;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by daant on 09-Dec-15.
@@ -24,9 +24,10 @@ public class IgnoreList {
     /*
    Method for getting information from the DOM
     */
-    public static Element getInfo(String key, Document doc){
+    public static Element getInfo(String key, Document doc, int pos){
 
-        return doc.select(keyTable(key)).first();
+        Elements element =  doc.select(keyTable(key)).eq(pos);
+        return element.first();
     }
     private static String keyTable(String key){
         switch (key){

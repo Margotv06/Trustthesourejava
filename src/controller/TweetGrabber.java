@@ -31,10 +31,10 @@ public class TweetGrabber{
         Element tweetText = getInfo("tweet", doc);
 
         // Making a tweet object with the text
-        Tweet tweet = new Tweet(tweetText.text(), doc);
+        //Tweet tweet = new Tweet(tweetText.text(), doc);
 
         // let's send the message back to the web
-        sendMessage(tweet.getMessage(), session);
+        //sendMessage(tweet.getMessage(), session);
 
     }
 
