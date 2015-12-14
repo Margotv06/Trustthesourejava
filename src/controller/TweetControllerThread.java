@@ -37,14 +37,16 @@ public class TweetControllerThread implements Runnable {
      */
     private void handleDoc() {
         Document doc = documents.pop();
-
+        // loop over every tweet in the DOM
         for(int i =0 ; i< doc.select(".js-tweet-text.tweet-text").size();i++) {
-
+            // make a tweet.java instancce from the tweet
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
+            // add it tot he ArrayList
             tweets.add(tweet);
-            //System.out.println(tweet.getMessageWords());
+            System.out.println("Original tweet message: "+tweet.getMessage());
+            System.out.println("Keywords  message: "+tweet.getMessageWords());
         }
-        System.out.println("Tweet array size: "+tweets.size());
+        //System.out.println("Tweet array size: "+tweets.size());
     }
     /*
     waits

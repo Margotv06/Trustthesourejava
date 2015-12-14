@@ -67,9 +67,9 @@ public class TweetGrabber2 implements Runnable {
                     if (command.length() != 0) {
                         command.names().toString();
                     }
-                if (command.has("search")) {
+                if (command.has("VALUE")) {
                     System.out.println("Search request received");
-                    search = URLEncoder.encode(command.getString("search"), "UTF-8");
+                    search = URLEncoder.encode(command.getString("VALUE"), "UTF-8");
                     System.out.println("TEST: search URL=" + search);
                 }
 

@@ -18,7 +18,7 @@ public class IgnoreList {
                 "te", "is", "ten", "als", "door", "van", "den", "de", "aan", "heb", "waar",
                 "dus", "ook", "ter", "op", "word", "wordt", "mee", "naar", "iets", "zoals", "was",
                 "ooit", "ligt", "er", "bij", "nog", "net", "voor", "om", "af", "kan", "zo",
-                "dan", "ene"};
+                "dan", "ene", "over", "ok", "hoewat", "maar", "tegen", "hebt"};
         return ignoreList;
     }
     /*

@@ -15,6 +15,7 @@ import java.util.Locale;
  */
 public class Tweet
 {
+    private int position;
     private String message;
     private ArrayList<String> messageWords;
     private int retweets;
@@ -30,7 +31,8 @@ public class Tweet
     private Session requestedSession;
     private Document doc;
 
-    public Tweet(String tweet, Document doc){
+    public Tweet(String tweet, Document doc, int pos){
+        this.position = pos;
         this.doc = doc;
         this.message = tweet;
         hashtag = searchHashtag(message);
@@ -39,8 +41,8 @@ public class Tweet
         this.likes = likes();
         this.userName = userName();
         this.profileName = profileName();
-        this.time = time();
-        getKeyWords(message);
+        //this.time = time();
+        this.messageWords = getKeyWords(message);
     }
 
     /*
@@ -56,8 +58,6 @@ public class Tweet
                 messageWords.add(word);
             }
         }
-        System.out.println(messageWords);
-        System.out.println(this.message);
         return messageWords;
     }
     /*
@@ -86,7 +86,7 @@ public class Tweet
      */
     private int retweets(){
 
-        Element element = IgnoreList.getInfo("retweets", doc);
+        Element element = IgnoreList.getInfo("retweets", doc, position);
 
         if (element == null) {
             return 0;
@@ -101,7 +101,7 @@ public class Tweet
     Search for the timestamp of the tweet
      */
     private Date time(){
-        String timeString = IgnoreList.getInfo("time", doc).text();
+        String timeString = IgnoreList.getInfo("time", doc, position).text();
         String[] arrayTimeString = timeString.split(" ");
         String dateString = month(arrayTimeString[3]);
         dateString += " ";
@@ -123,7 +123,7 @@ public class Tweet
     Search for the amount of likes a tweet has
      */
     private int likes(){
-        Element element = IgnoreList.getInfo("likes", doc);
+        Element element = IgnoreList.getInfo("likes", doc, position);
 
         if (element == null) {
             return 0;
@@ -139,13 +139,13 @@ public class Tweet
     Search for the username of the tweet
      */
     private String userName(){
-        return IgnoreList.getInfo("username", doc).text();
+        return IgnoreList.getInfo("username", doc, position).text();
     }
     /*
     Search for the profilename of the tweet
      */
     private String profileName(){
-        return IgnoreList.getInfo("profilename", doc).text();
+        return IgnoreList.getInfo("profilename", doc, position).text();
     }
 
     /*
@@ -230,4 +230,5 @@ public class Tweet
     public ArrayList<String> getHashtag() {
         return hashtag;
     }
+    public ArrayList<String> getMessageWords() { return messageWords;}
 }
