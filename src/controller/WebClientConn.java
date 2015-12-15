@@ -55,6 +55,12 @@ public class WebClientConn {
                 case "":
                     session.getRemote().sendString("No Command");
                     break;
+                case "send":
+                    session.getRemote().sendString("got Send Command");
+                    String word = jsonObject.get("DELETE").toString();
+                    String[] words = word.split(" ");
+                    tweetController.updateTweetList(words);
+                    break;
                 default:
                     session.getRemote().sendString("Invallid Command");
                     break;

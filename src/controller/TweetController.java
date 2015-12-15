@@ -54,4 +54,11 @@ public class TweetController {
         }
         return true;
     }
+    /*
+    method for manipulating the tweet ArrayList in TweetControllerThread.
+    Gets called from the web with an array of words to delete
+     */
+    public void updateTweetList(String[] words) {
+        sendMessage("got inside the update method");
+    }
 }
