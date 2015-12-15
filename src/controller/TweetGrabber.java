@@ -38,21 +38,6 @@ public class TweetGrabber{
 
     }
 
-    /*
-    Method for sending a string back to the web
-     */
-    private static boolean sendMessage(String message, Session session) {
-
-        // sends the twitter message back to the web
-        try{
-            session.getRemote().sendString(message);
-        }
-        catch (IOException e){
-            System.err.println(e);
-            return false;
-        }
-        return true;
-    }
 
 
 

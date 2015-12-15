@@ -33,7 +33,7 @@ public class WebClientConn {
 
     @OnWebSocketConnect
     public void onConnect(Session session){
-
+        tweetController.setSession(session);
     }
 
     /**

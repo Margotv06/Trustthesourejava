@@ -13,10 +13,12 @@ import java.util.*;
 public class TweetControllerThread implements Runnable {
     private LinkedList<Document> documents;
     private ArrayList<Tweet> tweets;
+    private TweetController tweetController;
 
-    public TweetControllerThread(LinkedList<Document> documents) {
+    public TweetControllerThread(LinkedList<Document> documents, TweetController tweetController) {
         this.documents = documents;
         this.tweets = new ArrayList<Tweet>();
+        this.tweetController = tweetController;
     }
     @Override
     public void run() {
@@ -43,10 +45,9 @@ public class TweetControllerThread implements Runnable {
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
             tweets.add(tweet);
-            System.out.println("Original tweet message: "+tweet.getMessage());
-            System.out.println("Keywords  message: "+tweet.getMessageWords());
         }
-        //System.out.println("Tweet array size: "+tweets.size());
+        // Sends a string back to the terminal of the web
+        tweetController.sendMessage("Amount of tweets gathered: "+tweets.size());
     }
     /*
     waits
