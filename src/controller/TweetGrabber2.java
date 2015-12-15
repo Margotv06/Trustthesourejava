@@ -69,7 +69,7 @@ public class TweetGrabber2 implements Runnable {
                     }
                 if (command.has("VALUE")) {
                     System.out.println("Search request received");
-                    search = URLEncoder.encode(command.getString("VALUE"), "UTF-8");
+                    search = command.getString("VALUE");
                     System.out.println("TEST: search URL=" + search);
                 }
 
@@ -87,7 +87,7 @@ public class TweetGrabber2 implements Runnable {
                 if (command.has("CONTINUE")) {
                     grabber.notify();
                 }
-            } catch (JSONException | UnsupportedEncodingException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
