@@ -65,5 +65,8 @@ public class TweetController {
      */
     public void updateTweetList(String[] words) {
         sendMessage("got inside the update method");
+        for (String word: words) {
+            sendMessage(word);
+        }
     }
 }

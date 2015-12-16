@@ -45,6 +45,9 @@ public class TweetControllerThread implements Runnable {
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
             tweets.add(tweet);
+            System.out.println(tweet.getMessageWords());
+            System.out.println(tweet.getMessage());
+
         }
         // Sends a string back to the terminal of the web
         tweetController.sendMessage("Amount of tweets gathered: "+tweets.size());

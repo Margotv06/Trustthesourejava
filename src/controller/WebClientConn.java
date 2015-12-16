@@ -61,8 +61,11 @@ public class WebClientConn {
                     String[] words = word.split(" ");
                     tweetController.updateTweetList(words);
                     break;
+                case "stop":
+                    session.getRemote().sendString("Stop command issued");
+
                 default:
-                    session.getRemote().sendString("Invallid Command");
+                    session.getRemote().sendString("Invalid Command");
                     break;
             }
 
