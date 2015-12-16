@@ -71,4 +71,15 @@ public class TweetController {
             sendMessage(word);
         }
     }
+    /*
+    checks if session is set
+     */
+    public boolean checkSession() {
+        if (this.session == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
