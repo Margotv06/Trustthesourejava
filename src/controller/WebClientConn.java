@@ -63,7 +63,8 @@ public class WebClientConn {
                     break;
                 case "stop":
                     session.getRemote().sendString("Stop command issued");
-
+                    tweetController.closeSession();
+                    break;
                 default:
                     session.getRemote().sendString("Invalid Command");
                     break;

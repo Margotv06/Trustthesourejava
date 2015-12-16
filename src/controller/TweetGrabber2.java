@@ -27,7 +27,7 @@ public class TweetGrabber2 implements Runnable {
     private JSONObject command;
     private String search;
     private Thread grabber;
-    private static final String LINK = "https://www.twitter.com/",
+    private final String LINK = "https://www.twitter.com/",
             SEARCH = "search?q=",
             // Here needs to be a search question
             SRC = "&src=typd";
@@ -41,16 +41,25 @@ public class TweetGrabber2 implements Runnable {
     }
 
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             command = checkCommand();
             execute(command);
-
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waiting();
         }
+        grabber.interrupt();
+    }
+    /*
+    waits
+     */
+    synchronized private void waiting() {
+        try {
+            this.wait(1000);
+        }
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            grabber.interrupt();
+        }
+        return;
     }
 
     private synchronized JSONObject checkCommand() {
@@ -144,7 +153,7 @@ class TweetContinueGrabber implements Runnable{
     }
 
     public void run() {
-        while (true) {
+        while(!Thread.currentThread().isInterrupted()){
             try {
                 link = BASEURL + search + SRC;
 

@@ -24,7 +24,6 @@ public class TweetController {
     private LinkedList<Document> documents;
 
     public TweetController() {
-
         documents = new LinkedList<Document>();
         tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
         tweetGrabber.start();
@@ -35,9 +34,12 @@ public class TweetController {
         this.session = session;
     }
 
+    /*
+    The one command to rule them all.
+     */
     public void closeSession(){
-        tweetGrabber.interrupt();
         tweetControllerThread.interrupt();
+        tweetGrabber.interrupt();
     }
 
     public synchronized void sendCommand(JSONObject command){
