@@ -27,7 +27,7 @@ public class WebClientConn {
     @OnWebSocketClose
     public void onClose(Session session,int statusCode, String reason){
         System.out.println("Session closed id:"+session.getLocalAddress());
-
+        tweetController.closeSession();
 
     }
 

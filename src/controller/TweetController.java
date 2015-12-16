@@ -35,6 +35,11 @@ public class TweetController {
         this.session = session;
     }
 
+    public void closeSession(){
+        tweetGrabber.interrupt();
+        tweetControllerThread.interrupt();
+    }
+
     public synchronized void sendCommand(JSONObject command){
         System.out.println("Got Command");
         grabberCommand.add(command);
