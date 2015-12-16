@@ -144,7 +144,8 @@ class TweetContinueGrabber implements Runnable{
     }
 
     public void run() {
-        while (true) {
+        Boolean continued = new Boolean(true);
+        while (continued) {
             try {
                 link = BASEURL + search + SRC;
 
@@ -166,6 +167,9 @@ class TweetContinueGrabber implements Runnable{
                 Object insideHtml = jsonObject.get("items_html");
                 document = Jsoup.parse(insideHtml.toString());
                 toStack(document);
+                if(jsonObject.get("has_more_items").toString()=="false"){
+                    continued=false;
+                }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
