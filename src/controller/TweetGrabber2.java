@@ -168,12 +168,14 @@ class TweetContinueGrabber implements Runnable{
                 document = Jsoup.parse(insideHtml.toString());
                 toStack(document);
                 if(jsonObject.get("has_more_items").toString()=="false"){
-                    continued=false;
+                    System.out.println("no more tweets");
+                    //continued=false;
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("no more tweets");
     }
 
     private int getCountedComposed(Document document){
