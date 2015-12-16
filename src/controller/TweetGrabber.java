@@ -12,10 +12,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-
+@Deprecated
 public class TweetGrabber{
     private static ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-
+    @Deprecated
     public static void TweetGrabber(String url, Session session){
 
         // Getting the page
@@ -45,12 +45,13 @@ public class TweetGrabber{
     /*
     Method for getting information from the DOM
      */
+    @Deprecated
     public static Element getInfo(String key, Document doc){
 
         return doc.select(keyTable(key)).first();
     }
 
-
+    @Deprecated
     private static String keyTable(String key){
         switch (key){
             // Returns the actual content of the tweet
