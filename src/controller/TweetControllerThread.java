@@ -23,7 +23,7 @@ public class TweetControllerThread implements Runnable {
     @Override
     public void run() {
         while (documents.isEmpty()) {
-            waiting();
+            waiting(100);
         }
         //tweetController.sendMessage("Tweet collection has started");
         while (!Thread.currentThread().isInterrupted()) {
@@ -33,7 +33,7 @@ public class TweetControllerThread implements Runnable {
             } else {
                 // Waits before trying to see if there is another DOM waiting
                 // Can be interrupted
-                waiting();
+                waiting(100);
             }
         }
     }
@@ -48,6 +48,7 @@ public class TweetControllerThread implements Runnable {
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
             tweets.add(tweet);
+            waiting(50);
             tweetController.sendMessage(tweet.getMessage(), "tweet");
 
         }
@@ -57,9 +58,9 @@ public class TweetControllerThread implements Runnable {
     /*
     waits
      */
-    synchronized private void waiting() {
+    synchronized private void waiting(int nanoseconds) {
         try {
-            this.wait(100);
+            this.wait(nanoseconds);
         }
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
