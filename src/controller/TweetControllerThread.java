@@ -62,6 +62,7 @@ public class TweetControllerThread implements Runnable {
         try {
             this.wait(nanoseconds);
         }
+
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
