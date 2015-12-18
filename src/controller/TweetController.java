@@ -49,11 +49,15 @@ public class TweetController {
     /*
     Method for sending a string back to the web
      */
-    public boolean sendMessage(String message) {
+    public boolean sendMessage(String message, String kind) {
 
         // sends the twitter message back to the web
         try{
-            session.getRemote().sendString(message);
+
+
+            String json = "{/MSG/: /"+kind+"/, /VALUE/: /"+message+"/}";
+            json = json.replace('/', '"');
+            session.getRemote().sendString(json);
         }
         catch (IOException e){
             System.err.println(e);
@@ -66,9 +70,9 @@ public class TweetController {
     Gets called from the web with an array of words to delete
      */
     public void updateTweetList(String[] words) {
-        sendMessage("got inside the update method");
+        //sendMessage("got inside the update method");
         for (String word: words) {
-            sendMessage(word);
+            //sendMessage(word);
         }
     }
     /*

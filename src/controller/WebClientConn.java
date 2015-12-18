@@ -49,24 +49,37 @@ public class WebClientConn {
             System.out.println(commands);
             switch(commands){
                 case "get":
-                    session.getRemote().sendString("Got Get Command");
+                    String json = "{/MSG/: / info /, /VALUE/: /Got get command./}";
+                    json = json.replace('/', '"');
+                    session.getRemote().sendString(json);
                     tweetController.sendCommand(jsonObject);
+
                     break;
                 case "":
-                    session.getRemote().sendString("No Command");
+                    String json2 = "{/MSG/: / info /, /VALUE/: /No command given./}";
+                    json = json2.replace('/', '"');
+                    session.getRemote().sendString(json2);
+
                     break;
                 case "send":
-                    session.getRemote().sendString("got Send Command");
+                    String json3 = "{/MSG/: / info /, /VALUE/: /Got send command/}";
+                    json = json3.replace('/', '"');
+                    session.getRemote().sendString(json3);
+
                     String word = jsonObject.get("DELETE").toString();
                     String[] words = word.split(" ");
                     tweetController.updateTweetList(words);
                     break;
                 case "stop":
-                    session.getRemote().sendString("Stop command issued");
+                    String json4 = "{/MSG/: / info /, /VALUE/: /Stop command issued/}";
+                    json = json4.replace('/', '"');
+                    session.getRemote().sendString(json4);
                     tweetController.closeSession();
                     break;
                 default:
-                    session.getRemote().sendString("Invalid Command");
+                    String json5 = "{/MSG/: / info /, /VALUE/: /Invalid command/}";
+                    json = json5.replace('/', '"');
+                    session.getRemote().sendString(json5);
                     break;
             }
 
