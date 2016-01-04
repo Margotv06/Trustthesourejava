@@ -18,6 +18,7 @@ public class TweetController {
     private HashMap<String,ArrayList<Tweet>> keywords;
     private Thread tweetGrabber;
     private Thread tweetControllerThread;
+    private TweetControllerThread controllerClass;
     private Session session;
     //private List<JSONObject> grabberCommand = Collections.synchronizedList(new LinkedList<JSONObject>());
     private Stack<JSONObject> grabberCommand = new Stack<>();
@@ -27,7 +28,11 @@ public class TweetController {
         documents = new LinkedList<Document>();
         tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
         tweetGrabber.start();
-        tweetControllerThread = new Thread(new TweetControllerThread(documents, this));
+
+
+        controllerClass = new TweetControllerThread(documents, this);
+
+        tweetControllerThread = new Thread(controllerClass);
         tweetControllerThread.start();
     }
     public void setSession(Session session) {
@@ -42,9 +47,10 @@ public class TweetController {
         tweetGrabber.interrupt();
     }
 
-    public synchronized void sendCommand(JSONObject command){
+    public synchronized void sendCommand(JSONObject command, int tweetsToGather){
         System.out.println("Got Command");
         grabberCommand.add(command);
+        controllerClass.setLimit(tweetsToGather);
     }
     /*
     Method for sending a string back to the web

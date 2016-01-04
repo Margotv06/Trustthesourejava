@@ -49,10 +49,12 @@ public class WebClientConn {
             System.out.println(commands);
             switch(commands){
                 case "get":
+                    String tweetsToGatherString = jsonObject.get("LIMIT").toString();
+                    int tweetsToGather = Integer.parseInt(tweetsToGatherString);
                     String json = "{/MSG/: / info /, /VALUE/: /Got get command./}";
                     json = json.replace('/', '"');
                     session.getRemote().sendString(json);
-                    tweetController.sendCommand(jsonObject);
+                    tweetController.sendCommand(jsonObject, tweetsToGather);
 
                     break;
                 case "":

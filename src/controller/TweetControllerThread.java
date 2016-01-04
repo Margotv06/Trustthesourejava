@@ -20,7 +20,7 @@ public class TweetControllerThread implements Runnable {
         this.documents = documents;
         this.tweets = new ArrayList<>();
         this.tweetController = tweetController;
-        tweetsToGather = 50;
+        tweetsToGather = 0;
     }
     @Override
     public void run() {
@@ -76,10 +76,18 @@ public class TweetControllerThread implements Runnable {
     checks there are enough tweets gathered
      */
     private void checkCount(){
-        int amountOfTweets = tweets.size();
-        if (amountOfTweets > tweetsToGather) {
-            System.out.println(tweets.size());
-            tweetController.closeSession();
+        if (tweetsToGather != 0) {
+            int amountOfTweets = tweets.size();
+            if (amountOfTweets > tweetsToGather) {
+                System.out.println(tweets.size());
+                tweetController.closeSession();
+            }
         }
+    }
+    /*
+    sets limit to tweets to gather
+     */
+    public void setLimit(int tweetsToGather){
+        this.tweetsToGather = tweetsToGather;
     }
 }
