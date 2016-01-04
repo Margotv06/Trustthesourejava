@@ -14,11 +14,13 @@ public class TweetControllerThread implements Runnable {
     private LinkedList<Document> documents;
     private ArrayList<Tweet> tweets;
     private TweetController tweetController;
+    private int tweetsToGather;
 
     public TweetControllerThread(LinkedList<Document> documents, TweetController tweetController) {
         this.documents = documents;
-        this.tweets = new ArrayList<Tweet>();
+        this.tweets = new ArrayList<>();
         this.tweetController = tweetController;
+        tweetsToGather = 50;
     }
     @Override
     public void run() {
@@ -30,6 +32,7 @@ public class TweetControllerThread implements Runnable {
             // checks to see if there is a document waiting
             if (documents.isEmpty() == false) {
                 handleDoc();
+                checkCount();
             } else {
                 // Waits before trying to see if there is another DOM waiting
                 // Can be interrupted
@@ -68,5 +71,15 @@ public class TweetControllerThread implements Runnable {
             Thread.currentThread().interrupt();
         }
         return;
+    }
+    /*
+    checks there are enough tweets gathered
+     */
+    private void checkCount(){
+        int amountOfTweets = tweets.size();
+        if (amountOfTweets > tweetsToGather) {
+            System.out.println(tweets.size());
+            tweetController.closeSession();
+        }
     }
 }
