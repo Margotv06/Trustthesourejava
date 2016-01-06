@@ -176,7 +176,7 @@ class TweetContinueGrabber implements Runnable{
                 document = Jsoup.parse(insideHtml.toString());
                 toStack(document);
                 if(jsonObject.get("has_more_items").toString()=="false"){
-                    //System.out.print("has no more items");
+                    System.out.print("has no more items");
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

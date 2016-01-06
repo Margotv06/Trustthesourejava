@@ -43,6 +43,7 @@ public class TweetController {
     The one command to rule them all.
      */
     public void closeSession(){
+        sendMessage("Tweet gathering has stopped", "message");
         tweetControllerThread.interrupt();
         tweetGrabber.interrupt();
     }
