@@ -48,6 +48,9 @@ public class IgnoreList {
             case "retweets":
                 return "li.js-stat-retweets";
 
+            case "picture":
+                return "img.avatar.js-action-profile-avatar";
+
             // Returns the amount of likes/favorites (in String)
             // example: "Retweets: (number of RT)"
             case "likes":
@@ -56,7 +59,7 @@ public class IgnoreList {
 
             // Returns the time the tweet was send
             case "time":
-                return "span.metadata";
+                return "span.js-short-timestamp";
         }
         return key;
     }
