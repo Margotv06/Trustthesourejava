@@ -68,6 +68,7 @@ public class WebClientConn {
                     json = json3.replace('/', '"');
                     session.getRemote().sendString(json3);
 
+
                     String word = jsonObject.get("DELETE").toString();
                     String[] words = word.split(" ");
                     tweetController.updateTweetList(words);
