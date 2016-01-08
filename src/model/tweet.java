@@ -218,11 +218,11 @@ public class Tweet
     Search for the username of the tweet
      */
     private String picture() {
-        System.out.println(IgnoreList.getInfo("picture", doc, position).attr("src"));
         return IgnoreList.getInfo("picture", doc, position).attr("src");
     }
 
     public String getPicture() {
+
         return picture;
     }
     public String getMessage(){
@@ -249,5 +249,6 @@ public class Tweet
     public ArrayList<String> getHashtag() {
         return hashtag;
     }
+
     public ArrayList<String> getMessageWords() { return messageWords;}
 }
