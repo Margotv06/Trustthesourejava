@@ -1,5 +1,7 @@
 import controller.WebClientServer;
+import view.UserFrame;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -10,9 +12,12 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Starting the Main.class");
+        new UserFrame();
         try{
             WebClientServer.main();
+
         }
+
         catch (Exception e){
             System.err.println(e);
         }
