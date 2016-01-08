@@ -46,7 +46,7 @@ public class IgnoreList {
             // Returns the amount of retweets (in String)
             // example: "Retweets: (number of RT)"
             case "retweets":
-                return "span.ProfileTweet-actionCountForPresentation";
+                return "null";
 
             case "picture":
                 return "img.avatar.js-action-profile-avatar";
