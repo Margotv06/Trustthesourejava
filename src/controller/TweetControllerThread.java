@@ -51,6 +51,14 @@ public class TweetControllerThread implements Runnable {
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
             tweets.add(tweet);
+            System.out.println("------------------------------------------------");
+            System.out.println(tweet.getProfilename());
+            System.out.println(tweet.getMessage());
+            System.out.println(tweet.getTime());
+            System.out.println(tweet.getPicture());
+            System.out.println(tweet.getRetweets());
+            System.out.println("------------------------------------------------");
+            System.out.println("");
             waiting(50);
             tweetController.sendMessage(tweet.getMessage(), "tweet");
 
