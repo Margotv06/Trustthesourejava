@@ -20,9 +20,10 @@ public class Tweet
     private ArrayList<String> messageWords;
     private int retweets;
     private int likes;
-    private Date time;
+    private String time;
     private String profileName;
     private String userName;
+    private String picture;
 
     private String url;
     private ArrayList<String> hashtag;
@@ -41,8 +42,9 @@ public class Tweet
         this.likes = likes();
         this.userName = userName();
         this.profileName = profileName();
-        //this.time = time();
+        this.time = timeUnix();
         this.messageWords = getKeyWords(message);
+        this.picture = picture();
     }
 
     /*
@@ -117,6 +119,14 @@ public class Tweet
         catch (ParseException e) {
         }
         return date;
+    }
+
+    /*
+   Search for the timestamp of the tweet
+    */
+    private String timeUnix(){
+        return IgnoreList.getInfo("time", doc, position).attr("data-time");
+
     }
 
     /*
@@ -204,12 +214,21 @@ public class Tweet
         }
         return "";
     }
+    /*
+    Search for the username of the tweet
+     */
+    private String picture() {
+        System.out.println(IgnoreList.getInfo("picture", doc, position).attr("src"));
+        return IgnoreList.getInfo("picture", doc, position).attr("src");
+    }
 
-
+    public String getPicture() {
+        return picture;
+    }
     public String getMessage(){
         return message;
     }
-    public Date getTime(){
+    public String getTime(){
         return time;
     }
     public int getRetweets() {
