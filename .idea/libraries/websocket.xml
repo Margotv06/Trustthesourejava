@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="websocket">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/lib/jetty/websocket" />
+      <root url="file://$PROJECT_DIR$/lib/Jetty/websocket" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
