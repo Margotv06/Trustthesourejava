@@ -58,13 +58,19 @@ public class TweetController {
      */
     public boolean sendMessage(String message, String kind) {
 
+
         // sends the twitter message back to the web
         try{
 
+            switch (kind){
+                case "tweet":
+                    session.getRemote().sendString("<u>"+message+"</u>");
+                    break;
+            }
 
             String json = "{/MSG/: /"+kind+"/, /VALUE/: /"+message+"/}";
             json = json.replace('/', '"');
-            session.getRemote().sendString(json);
+            //session.getRemote().sendString(json);
         }
         catch (IOException e){
             System.err.println(e);
@@ -91,6 +97,45 @@ public class TweetController {
         }
         else {
             return true;
+        }
+    }
+
+
+    public void sendTweet(Tweet tweet, String kind) {
+
+
+        // sends the twitter message back to the web
+        try{
+
+            String tweethtml =
+                    "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
+                        //Tweet Image
+                        "<div class='col-md-1 col-sm-1 col-lg-1'>" +
+                            "<img src='" + tweet.getPicture() + "' alt='Picture'>" +
+                        "</div>" +
+                        //Tweet Body
+                        "<div class='col-md-9 col-sm-9 col-lg-9'>" +
+                            "<div class='col-md-12 col-lg-12 col-sm-12'>" +
+                                //Person / profile name
+                                "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + "-" +
+                                //Time
+                                "<div >" +
+                                    new Date((long)tweet.getTime()*1000) +
+                                "</div>" +
+                            "</div>" +
+                            "<div class='col-md-12 col-sm-12 col-lg-12'>" +
+                                tweet.getMessage() +
+                            "</div>" +
+                            "<div class='col-md-12 col-sm-12 col-lg-12'>" +
+                                "Retweets: " + tweet.getRetweets() +
+                                "Likes: " + tweet.getLikes() +
+                            "</div>" +
+                        "</div>" +
+                    "</div>";
+            session.getRemote().sendString(tweethtml);
+        }
+        catch (IOException e){
+            System.err.println(e);
         }
     }
 }

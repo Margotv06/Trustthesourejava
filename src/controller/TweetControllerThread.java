@@ -60,7 +60,7 @@ public class TweetControllerThread implements Runnable {
             System.out.println("------------------------------------------------");
             System.out.println("");
             waiting(50);
-            tweetController.sendMessage(tweet.getMessage(), "tweet");
+            tweetController.sendTweet(tweet, "tweet");
 
         }
         // Sends a string back to the terminal of the web
