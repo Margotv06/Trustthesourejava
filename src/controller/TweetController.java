@@ -26,14 +26,15 @@ public class TweetController {
 
     public TweetController() {
         documents = new LinkedList<Document>();
-        tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents, this));
-        tweetGrabber.start();
+
 
 
         controllerClass = new TweetControllerThread(documents, this);
 
         tweetControllerThread = new Thread(controllerClass);
         tweetControllerThread.start();
+        tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
+        tweetGrabber.start();
     }
     public void setSession(Session session) {
         this.session = session;

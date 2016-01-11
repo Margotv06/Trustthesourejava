@@ -11,6 +11,7 @@ import java.util.*;
  * Created by daant on 11-Dec-15.
  */
 public class TweetControllerThread implements Runnable {
+    private int tweetGathered;
     private LinkedList<Document> documents;
     private ArrayList<Tweet> tweets;
     private TweetController tweetController;
@@ -21,6 +22,7 @@ public class TweetControllerThread implements Runnable {
         this.tweets = new ArrayList<>();
         this.tweetController = tweetController;
         tweetsToGather = 0;
+        tweetGathered = 0;
     }
     @Override
     public void run() {
@@ -51,20 +53,16 @@ public class TweetControllerThread implements Runnable {
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
             tweets.add(tweet);
-            System.out.println("------------------------------------------------");
-            System.out.println(tweet.getProfilename());
-            System.out.println(tweet.getMessage());
-            System.out.println(tweet.getTime());
-            System.out.println(tweet.getPicture());
-            System.out.println(tweet.getRetweets());
-            System.out.println("------------------------------------------------");
-            System.out.println("");
             waiting(50);
             tweetController.sendTweet(tweet, "tweet");
 
         }
         // Sends a string back to the terminal of the web
         System.out.println("Amount of tweets gathered: "+tweets.size());
+        if (tweetGathered == tweets.size()) {
+            tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
+        }
+        tweetGathered = tweets.size();
     }
     /*
     waits
