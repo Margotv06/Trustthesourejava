@@ -1,5 +1,6 @@
 package controller;
 
+import model.Tweet;
 import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,8 +34,10 @@ public class TweetGrabber2 implements Runnable {
             SRC = "&src=typd";
     private Document document;
     private LinkedList<Document> documents;
+    private TweetController tweetController;
 
-    public TweetGrabber2(Stack<JSONObject> message, LinkedList<Document> documents) {
+    public TweetGrabber2(Stack<JSONObject> message, LinkedList<Document> documents, TweetController tweetController) {
+        this.tweetController = tweetController;
         this.message = message;
         this.documents = documents;
         System.out.println("TweetGrabber Initialized");
@@ -86,7 +89,7 @@ public class TweetGrabber2 implements Runnable {
                     System.out.println("TEST: starting first fetch");
                     getFirstDoc();
                     if (command.get("GET").equals("ALL")) {
-                        grabber = new Thread(new TweetContinueGrabber(search, document, documents));
+                        grabber = new Thread(new TweetContinueGrabber(search, document, documents, tweetController));
                         grabber.start();
                     }
                 }
@@ -125,6 +128,7 @@ public class TweetGrabber2 implements Runnable {
 
 
 class TweetContinueGrabber implements Runnable{
+    private TweetController tweetController;
     private String search;
     private LinkedList<Document> documents;
     private  Document document;
@@ -139,7 +143,8 @@ class TweetContinueGrabber implements Runnable{
         MINPOS = "&max_position=";
     private String minpos;
 
-    public TweetContinueGrabber(String search, Document document, LinkedList<Document> documents){
+    public TweetContinueGrabber(String search, Document document, LinkedList<Document> documents, TweetController tweetController){
+        this.tweetController = tweetController;
         counted = 0;
         this.search = search;
         synchronized (documents){this.documents = documents;}
@@ -177,6 +182,8 @@ class TweetContinueGrabber implements Runnable{
                 toStack(document);
                 if(jsonObject.get("has_more_items").toString()=="false"){
                     System.out.print("has no more items");
+                    tweetController.closeSession("Tweet gathering has stopped because the crawler can't find anymore items.");
+
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

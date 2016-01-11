@@ -26,7 +26,7 @@ public class TweetController {
 
     public TweetController() {
         documents = new LinkedList<Document>();
-        tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
+        tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents, this));
         tweetGrabber.start();
 
 
@@ -42,10 +42,13 @@ public class TweetController {
     /*
     The one command to rule them all.
      */
-    public void closeSession(){
-        sendMessage("Tweet gathering has stopped", "message");
+    public void closeSession(String message){
+        sendMessage(message, "message");
         tweetControllerThread.interrupt();
         tweetGrabber.interrupt();
+    }
+    public void closeSession() {
+        closeSession("Tweet gathering has stopped");
     }
 
     public synchronized void sendCommand(JSONObject command, int tweetsToGather){
