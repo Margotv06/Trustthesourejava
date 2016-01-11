@@ -95,7 +95,7 @@ public class Tweet
         }
 
         String retweetsString = element.text();
-        retweetsString = retweetsString.replaceAll("\\D+","");
+        retweetsString = retweetsString.replaceAll("\\D+", "");
         return Integer.parseInt(retweetsString);
     }
 
@@ -228,8 +228,8 @@ public class Tweet
     public String getMessage(){
         return message;
     }
-    public String getTime(){
-        return time;
+    public int getTime(){
+        return Integer.parseInt(time);
     }
     public int getRetweets() {
         return retweets;
