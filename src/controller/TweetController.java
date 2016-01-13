@@ -25,6 +25,7 @@ public class TweetController {
     private LinkedList<Document> documents;
 
     public TweetController() {
+        tweets = new ArrayList<Tweet>();
         documents = new LinkedList<Document>();
 
 
@@ -60,6 +61,16 @@ public class TweetController {
         grabberCommand.add(command);
         controllerClass.setLimit(tweetsToGather);
     }
+    /*
+    send everything back to the web in reverse
+     */
+    public void sendBack() {
+        for (int i=tweets.size()-1; i > 0; i--) {
+            sendTweet(tweets.get(i), "tweet");
+            //waiting(1);
+        }
+    }
+
     /*
     Method for sending a string back to the web
      */
@@ -149,5 +160,25 @@ public class TweetController {
         catch (IOException e){
             System.err.println(e);
         }
+    }
+    public void addTweet(Tweet tweet) {
+        tweets.add(tweet);
+    }
+    public int getTweetsSize(){
+        return tweets.size();
+    }
+    /*
+    waits
+     */
+    synchronized private void waiting(int nanoseconds) {
+        try {
+            this.wait(nanoseconds);
+        }
+
+
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return;
     }
 }

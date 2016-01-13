@@ -83,6 +83,9 @@ public class WebClientConn {
                 case "stop":
                     tweetController.closeSession();
                     break;
+                case "end":
+                    tweetController.sendBack();
+                    break;
                 default:
                     String json5 = "{/MSG/: / info /, /VALUE/: /Invalid command/}";
                     json = json5.replace('/', '"');

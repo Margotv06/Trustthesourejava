@@ -13,13 +13,11 @@ import java.util.*;
 public class TweetControllerThread implements Runnable {
     private int tweetGathered;
     private LinkedList<Document> documents;
-    private ArrayList<Tweet> tweets;
     private TweetController tweetController;
     private int tweetsToGather;
 
     public TweetControllerThread(LinkedList<Document> documents, TweetController tweetController) {
         this.documents = documents;
-        this.tweets = new ArrayList<>();
         this.tweetController = tweetController;
         tweetsToGather = 0;
         tweetGathered = 0;
@@ -52,17 +50,18 @@ public class TweetControllerThread implements Runnable {
             // make a tweet.java instance from the tweet
             Tweet tweet = new Tweet( doc.select(".js-tweet-text.tweet-text").get(i).text(), doc, i);
             // add it tot he ArrayList
-            tweets.add(tweet);
+            tweetController.addTweet(tweet);
             waiting(50);
-            tweetController.sendTweet(tweet, "tweet");
-
+            if (i == 0) {
+                tweetController.sendTweet(tweet, "tweet");
+            }
         }
         // Sends a string back to the terminal of the web
-        System.out.println("Amount of tweets gathered: "+tweets.size());
-        if (tweetGathered == tweets.size()) {
+        System.out.println("Amount of tweets gathered: "+tweetController.getTweetsSize());
+        if (tweetGathered == tweetController.getTweetsSize()) {
             tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
         }
-        tweetGathered = tweets.size();
+        tweetGathered = tweetController.getTweetsSize();
     }
     /*
     waits
@@ -83,9 +82,9 @@ public class TweetControllerThread implements Runnable {
      */
     private void checkCount(){
         if (tweetsToGather != 0) {
-            int amountOfTweets = tweets.size();
+            int amountOfTweets = tweetController.getTweetsSize();
             if (amountOfTweets > tweetsToGather) {
-                System.out.println(tweets.size());
+                System.out.println(tweetController.getTweetsSize());
                 tweetController.closeSession();
             }
         }
