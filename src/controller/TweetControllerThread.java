@@ -54,6 +54,9 @@ public class TweetControllerThread implements Runnable {
             waiting(50);
             if (i == 0) {
                 tweetController.sendTweet(tweet, "tweet");
+
+
+
             }
         }
         // Sends a string back to the terminal of the web
