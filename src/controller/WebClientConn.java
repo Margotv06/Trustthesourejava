@@ -5,6 +5,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
 
 import model.Tweet;
@@ -51,15 +52,21 @@ public class WebClientConn {
                 case "get":
                     String tweetsToGatherString = jsonObject.get("LIMIT").toString();
                     int tweetsToGather = Integer.parseInt(tweetsToGatherString);
-                    String json = "{/MSG/: / info /, /VALUE/: /Got get command./}";
-                    json = json.replace('/', '"');
-                    session.getRemote().sendString(json);
+                    Random rand = new Random();
+                    int randomint = rand.nextInt(50)+1;
+                    String reply = "<div class='h4' id='pleaseWait"+randomint+"'>Commando ontvangen, even geduld A.U.B.<img src='/image/preloader.gif' alt='loading' style='height: 3%'></div>" +
+                            "<script>" +
+                            "   setTimeout(function() {\n" +
+                            "           $('#pleaseWait"+randomint+"').fadeOut('fast');\n" +
+                            "       }, 2800); " +
+                            "</script>";
+                    session.getRemote().sendString(reply);
                     tweetController.sendCommand(jsonObject, tweetsToGather);
 
                     break;
                 case "":
                     String json2 = "{/MSG/: / info /, /VALUE/: /No command given./}";
-                    json = json2.replace('/', '"');
+                    String json = json2.replace('/', '"');
                     session.getRemote().sendString(json2);
 
                     break;
@@ -74,9 +81,6 @@ public class WebClientConn {
                     tweetController.updateTweetList(words);
                     break;
                 case "stop":
-                    String json4 = "{/MSG/: / info /, /VALUE/: /Stop command issued/}";
-                    json = json4.replace('/', '"');
-                    session.getRemote().sendString(json4);
                     tweetController.closeSession();
                     break;
                 default:

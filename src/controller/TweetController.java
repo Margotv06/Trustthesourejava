@@ -44,7 +44,7 @@ public class TweetController {
     stops everything
      */
     public void closeSession(String message){
-        sendMessage(message, "message");
+        sendMessage(message, "endsearch");
         //tweetControllerThread.interrupt();
         tweetGrabber.interrupt();
     }
@@ -72,6 +72,11 @@ public class TweetController {
             switch (kind){
                 case "tweet":
                     session.getRemote().sendString("<u>"+message+"</u>");
+                    break;
+                case "endsearch":
+                    String reply =
+                            "<div class='hidden'>end</div>";
+                    session.getRemote().sendString(reply);
                     break;
             }
 
