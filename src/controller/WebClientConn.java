@@ -100,7 +100,7 @@ public class WebClientConn {
 
     @OnWebSocketError
     public void onError(Throwable t){
-
+        tweetController.closeSession();
     }
 
 
