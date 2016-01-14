@@ -94,31 +94,8 @@ public class Tweet
             return 0;
         }
 
-        String retweetsString = element.text();
-        retweetsString = retweetsString.replaceAll("\\D+", "");
+        String retweetsString = element.attr("data-tweet-stat-count");
         return Integer.parseInt(retweetsString);
-    }
-
-    /*
-    Search for the timestamp of the tweet
-     */
-    private Date time(){
-        String timeString = IgnoreList.getInfo("time", doc, position).text();
-        String[] arrayTimeString = timeString.split(" ");
-        String dateString = month(arrayTimeString[3]);
-        dateString += " ";
-        dateString += arrayTimeString[2];
-        dateString += ", "+arrayTimeString[4];
-        dateString += ", "+arrayTimeString[0];
-
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy, h:mm", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = format.parse(dateString);
-        }
-        catch (ParseException e) {
-        }
-        return date;
     }
 
     /*
@@ -139,8 +116,7 @@ public class Tweet
             return 0;
         }
 
-        String likesString = element.text();
-        likesString = likesString.replaceAll("\\D+","");
+        String likesString = element.attr("data-tweet-stat-count");
         return Integer.parseInt(likesString);
 
     }

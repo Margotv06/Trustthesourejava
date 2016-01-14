@@ -18,7 +18,9 @@ import org.json.JSONObject;
  */
 @WebSocket
 public class WebClientConn {
+
     private TweetController tweetController = new TweetController();
+    private Session session;
     /**
      * Handling a closed connection
      * @param session session of request
@@ -35,6 +37,7 @@ public class WebClientConn {
     @OnWebSocketConnect
     public void onConnect(Session session){
         tweetController.setSession(session);
+        this.session = session;
     }
 
     /**
@@ -50,6 +53,11 @@ public class WebClientConn {
             System.out.println(commands);
             switch(commands){
                 case "get":
+                    if (this.session == session) {
+                        tweetController.closeAll();
+                        this.tweetController = new TweetController();
+                        tweetController.setSession(session);
+                    }
                     String tweetsToGatherString = jsonObject.get("LIMIT").toString();
                     int tweetsToGather = Integer.parseInt(tweetsToGatherString);
                     Random rand = new Random();

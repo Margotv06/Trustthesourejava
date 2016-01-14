@@ -56,6 +56,11 @@ public class TweetController {
         closeSession("Tweet gathering has stopped");
     }
 
+    public void closeAll() {
+        tweetControllerThread.interrupt();
+        tweetGrabber.interrupt();
+    }
+
     public synchronized void sendCommand(JSONObject command, int tweetsToGather){
         System.out.println("Got Command");
         grabberCommand.add(command);
