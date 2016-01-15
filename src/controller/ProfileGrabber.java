@@ -37,7 +37,7 @@ public class ProfileGrabber {
         following = Integer.parseInt(document.select("span.ProfileNav-value").get(1).text().replaceAll("\\D+",""));
         followers = Integer.parseInt(document.select("span.ProfileNav-value").get(2).text().replaceAll("\\D+",""));
         likes = Integer.parseInt(document.select("span.ProfileNav-value").get(3).text().replaceAll("\\D+",""));
-        joinDate = document.select("span.ProfileHeaderCard-joinDateText").attr("data-original-title");
+        joinDate = document.select("span.ProfileHeaderCard-joinDateText").text();
         location = document.select("span.ProfileHeaderCard-locationText").text();
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
 
