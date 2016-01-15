@@ -54,7 +54,7 @@ public class WebClientConn {
             switch(commands){
                 case "get":
                     if (this.session == session) {
-                        tweetController.closeAll();
+                        //tweetController.closeAll();
                         this.tweetController = new TweetController();
                         tweetController.setSession(session);
                     }
