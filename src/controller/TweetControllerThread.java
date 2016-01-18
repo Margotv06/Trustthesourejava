@@ -52,9 +52,8 @@ public class TweetControllerThread implements Runnable {
             // add it tot he ArrayList
             tweetController.addTweet(tweet);
             waiting(50);
-            if (i == 0) {
-                tweetController.sendTweet(tweet, "tweet");
-            }
+            tweetController.sendTweet(tweet, "tweet");
+
         }
         // Sends a string back to the terminal of the web
         System.out.println("Amount of tweets gathered: "+tweetController.getTweetsSize());
