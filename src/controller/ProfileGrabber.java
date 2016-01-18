@@ -37,19 +37,51 @@ public class ProfileGrabber {
         following = Integer.parseInt(document.select("span.ProfileNav-value").get(1).text().replaceAll("\\D+",""));
         followers = Integer.parseInt(document.select("span.ProfileNav-value").get(2).text().replaceAll("\\D+",""));
         likes = Integer.parseInt(document.select("span.ProfileNav-value").get(3).text().replaceAll("\\D+",""));
-        joinDate = document.select("span.ProfileHeaderCard-joinDateText").text();
+
+        joinDate = document.select("span.ProfileHeaderCard-joinDateText").first().attr("title");
+
         location = document.select("span.ProfileHeaderCard-locationText").text();
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
-
-        System.out.println(tweets);
-        System.out.println(following);
-        System.out.println(followers);
-        System.out.println(likes);
-        System.out.println(joinDate);
-        System.out.println(location);
-        System.out.println(imageUrl);
     }
-    public static void main(String [ ] args) {
-        ProfileGrabber profileGrabber = new ProfileGrabber("Bol_com_games");
+
+    public static void main(String[] args) {
+        new ProfileGrabber("bol_com_games");
+    }
+
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public int getTweets() {
+        return tweets;
+    }
+
+    public int getFollowing() {
+        return following;
+    }
+
+    public int getFollowers() {
+        return followers;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

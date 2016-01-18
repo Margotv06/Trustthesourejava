@@ -14,6 +14,7 @@ import java.util.*;
  * Created by pjvan on 8-12-2015.
  */
 public class TweetController {
+    private ProfileGrabber profileGrabber;
     private ArrayList<Tweet> tweets;
     private HashMap<String,ArrayList<Tweet>> keywords;
     private Thread tweetGrabber;
@@ -127,6 +128,14 @@ public class TweetController {
             return true;
         }
     }
+    /*
+    Start the profile crawler
+     */
+    public void profileCrawler(String profileName) {
+        profileGrabber = new ProfileGrabber(profileName);
+        System.out.println("amount of likes: "+profileGrabber.getLikes());
+    }
+
 
 
     public void sendTweet(Tweet tweet, String kind) {

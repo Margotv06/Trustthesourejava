@@ -94,6 +94,10 @@ public class WebClientConn {
                 case "end":
                     tweetController.sendBack();
                     break;
+                case "profile":
+                    String profileName = jsonObject.get("NAME").toString();
+                    tweetController.profileCrawler(profileName);
+                    break;
                 default:
                     String json5 = "{/MSG/: / info /, /VALUE/: /Invalid command/}";
                     json = json5.replace('/', '"');
