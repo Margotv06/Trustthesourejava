@@ -54,7 +54,7 @@ public class WebClientConn {
             switch(commands){
                 case "get":
                     if (this.session == session) {
-                        tweetController.closeAll();
+                        //tweetController.closeAll();
                         this.tweetController = new TweetController();
                         tweetController.setSession(session);
                     }
@@ -93,6 +93,10 @@ public class WebClientConn {
                     break;
                 case "end":
                     tweetController.sendBack();
+                    break;
+                case "profile":
+                    String profileName = jsonObject.get("NAME").toString();
+                    tweetController.profileCrawler(profileName);
                     break;
                 default:
                     String json5 = "{/MSG/: / info /, /VALUE/: /Invalid command/}";
