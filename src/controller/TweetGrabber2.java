@@ -28,7 +28,7 @@ public class TweetGrabber2 implements Runnable {
     private String search;
     private Thread grabber;
     private final String LINK = "https://www.twitter.com/",
-            SEARCH = "search?q=",
+            SEARCH = "search?f=tweets&q=",
             // Here needs to be a search question
             SRC = "&src=typd";
     private Document document;
@@ -130,7 +130,7 @@ class TweetContinueGrabber implements Runnable{
     private  Document document;
     private String link;
     private int counted;
-    private static final String BASEURL = "https://www.twitter.com/i/search/timeline?vertical=default&q=",
+    private static final String BASEURL = "https://www.twitter.com/i/search/timeline?f=tweets&vertical=default&q=",
         // searchQuestion here
         SRC = "&src=typd",
         COMPOSED = "&composed_count=",

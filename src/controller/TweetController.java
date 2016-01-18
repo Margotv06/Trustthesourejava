@@ -138,11 +138,11 @@ public class TweetController {
             String tweethtml =
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
                         //Tweet Image
-                        "<div class='col-md-1 col-sm-1 col-lg-1'>" +
+                        "<div class='col-md-2 col-sm-2 col-lg-2'>" +
                             "<img src='" + tweet.getPicture() + "' alt='Picture'>" +
                         "</div>" +
                         //Tweet Body
-                        "<div class='col-md-9 col-sm-9 col-lg-9'>" +
+                        "<div class='col-md-10 col-sm-10 col-lg-10'>" +
                             "<div class='col-md-12 col-lg-12 col-sm-12'>" +
                                 //Person / profile name
                                 "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + "-" +
