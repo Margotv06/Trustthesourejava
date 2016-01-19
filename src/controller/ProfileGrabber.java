@@ -15,6 +15,8 @@ import java.util.*;
 public class ProfileGrabber {
     private Document document;
     private String profile;
+    private String name;
+    private boolean verified;
 
     private int tweets;
     private int following;
@@ -23,6 +25,7 @@ public class ProfileGrabber {
     private String joinDate;
     private String location;
     private String imageUrl;
+    private int amountOfPictures;
 
     public ProfileGrabber(String profile) {
         this.profile = profile;
@@ -33,6 +36,15 @@ public class ProfileGrabber {
 
     }
     private void getProfileInfo() {
+        name = document.select("a.ProfileHeaderCard-nameLink").text();
+        String verifiedString = document.select("span.ProfileHeaderCard-badges.ProfileHeaderCard-badges--1").text();
+        if (verifiedString.contains("account")){
+            verified = true;
+        }
+        else {
+            verified = false;
+        }
+
         tweets = Integer.parseInt(document.select("span.ProfileNav-value").get(0).text().replaceAll("\\D+",""));
         following = Integer.parseInt(document.select("span.ProfileNav-value").get(1).text().replaceAll("\\D+",""));
         followers = Integer.parseInt(document.select("span.ProfileNav-value").get(2).text().replaceAll("\\D+",""));
@@ -42,10 +54,18 @@ public class ProfileGrabber {
 
         location = document.select("span.ProfileHeaderCard-locationText").text();
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
+        String amountOfPicturesString = document.select("a.PhotoRail-headingWithCount").text().replaceAll("\\D+","");
+        if (amountOfPicturesString.equals("")) {
+            amountOfPictures = 0;
+        }
+        else {
+            amountOfPictures = Integer.parseInt(amountOfPicturesString);
+        }
+        System.out.println(verified);
     }
 
     public static void main(String[] args) {
-        new ProfileGrabber("bol_com_games");
+        new ProfileGrabber("barackobama");
     }
 
 
