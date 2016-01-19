@@ -148,11 +148,11 @@ public class TweetController {
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
                         //Tweet Image
                         "<div class='col-md-2 col-sm-2 col-lg-2'>" +
-                            "<img src='" + tweet.getPicture() + "' alt='Picture'>" +
+                            "<img src='" + tweet.getPicture() + "' alt='Picture' onclick='searchProfile(\""+tweet.getUsername()+" \")'>" +
                         "</div>" +
                         //Tweet Body
                         "<div class='col-md-10 col-sm-10 col-lg-10'>" +
-                            "<div class='col-md-12 col-lg-12 col-sm-12'>" +
+                            "<div class='col-md-12 col-lg-12 col-sm-12' onclick='searchProfile(\""+tweet.getUsername()+"\")'>" +
                                 //Person / profile name
                                 "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + "-" +
                                 //Time
