@@ -156,6 +156,13 @@ public class TweetController {
                                         "Tweets:   " + profileGrabber.getTweets()+ "<br>" +
                                     "</div>" +
                                 "</div>" +
+                                "<div class='col-sm-12 col-md-6 col-lg-6'>" +
+                                    "<div class='col-sm-12 col-md-12 col-lg-12'>" +
+                                        "Likes:    " + profileGrabber.getLikes() + "<br>" +
+                                        "Location:" + profileGrabber.getLocation() +"<br>" +
+                                        "Tweets:   " + profileGrabber.getFollowing()+ "<br>" +
+                                    "</div>" +
+                                "</div>" +
                             "</div>" +
                     "</div>";
         String script =
