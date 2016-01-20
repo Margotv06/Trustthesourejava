@@ -72,7 +72,10 @@ public class ProfileGrabber {
         else {
             likes = 0;
         }
-        joinDate = document.select("span.ProfileHeaderCard-joinDateText").first().attr("title");
+        Element joinDateElement = document.select("span.ProfileHeaderCard-joinDateText").first();
+        if (joinDateElement != null) {
+            joinDate = joinDateElement.attr("title");
+        }
         location = document.select("span.ProfileHeaderCard-locationText").text();
 
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
