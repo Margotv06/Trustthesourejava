@@ -104,4 +104,7 @@ public class ProfileGrabber {
     public String getImageUrl() {
         return imageUrl;
     }
+    public String getName() {
+        return name;
+    }
 }

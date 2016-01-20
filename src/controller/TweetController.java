@@ -133,7 +133,7 @@ public class TweetController {
      */
     public void profileCrawler(String profileName) {
         profileGrabber = new ProfileGrabber(profileName);
-        System.out.println("amount of likes: "+profileGrabber.getLikes());
+
     }
 
 
