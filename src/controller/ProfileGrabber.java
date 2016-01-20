@@ -85,7 +85,7 @@ public class ProfileGrabber {
             joinDate = "Onbekend";
         }
         location = document.select("span.ProfileHeaderCard-locationText").text();
-        if (location == "null") {
+        if (location == "null" || location == "") {
             location = "Onbekend";
         }
 
