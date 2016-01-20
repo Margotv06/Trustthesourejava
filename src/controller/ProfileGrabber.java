@@ -1,13 +1,10 @@
 package controller;
 
 import org.jsoup.Jsoup;
-import model.Tweet;
-import org.eclipse.jetty.websocket.api.Session;
-import org.json.JSONObject;
 import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by daant on 15-Jan-16.
@@ -36,7 +33,12 @@ public class ProfileGrabber {
 
     }
     private void getProfileInfo() {
-        name = document.select("a.ProfileHeaderCard-nameLink").text();
+        Element nameElement = document.select("a.ProfileHeaderCard-nameLink").first();
+        if (nameElement != null) {
+            name = document.select("a.ProfileHeaderCard-nameLink").text();
+        }
+        else { name = "Name is not available"; }
+
         String verifiedString = document.select("span.ProfileHeaderCard-badges.ProfileHeaderCard-badges--1").text();
         if (verifiedString.contains("account")){
             verified = true;
@@ -44,39 +46,48 @@ public class ProfileGrabber {
         else {
             verified = false;
         }
-        String tweetsString = document.select("span.ProfileNav-value").get(0).text();
-        if (tweetsString != "") {
-            tweets = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
+        // Lets set some default values
+        followers = 0;
+        likes = 0;
+        tweets = 0;
+        following = 0;
+        Elements barValue = document.select("span.ProfileNav-value");
+        Elements barLabel = document.select("span.ProfileNav-label");
+
+        System.out.println("size: "+barValue.size());
+
+        for (int i = 0; i != barValue.size(); i++ ) {
+            String something = barValue.get(i).text(); // still needs to be determined what it is
+            String somethingLabel = barLabel.get(i).text();
+
+            System.out.println("tweets:" +somethingLabel);
+            if (somethingLabel.contains("Tweets")) {
+
+                tweets = Integer.parseInt(something.replaceAll("\\D+",""));
+            }
+            if (somethingLabel.contains("Volgend")) {
+                following = Integer.parseInt(something.replaceAll("\\D+",""));
+            }
+            if (somethingLabel.contains("Volgers")) {
+                followers = Integer.parseInt(something.replaceAll("\\D+",""));
+            }
+            if (somethingLabel.contains("Vind-ik-leuks")) {
+                likes = Integer.parseInt(something.replaceAll("\\D+",""));
+            }
+
         }
-        else {
-            tweets = 0;
-        }
-        String followingString = document.select("span.ProfileNav-value").get(1).text();
-        if (followingString != "") {
-            following = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
-        }
-        else {
-            following = 0;
-        }
-        String followersString = document.select("span.ProfileNav-value").get(2).text();
-        if (followersString != "") {
-            followers = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
-        }
-        else {
-            followers = 0;
-        }
-        String likesString = document.select("span.ProfileNav-value").get(3).text();
-        if (likesString != "") {
-            likes = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
-        }
-        else {
-            likes = 0;
-        }
+
         Element joinDateElement = document.select("span.ProfileHeaderCard-joinDateText").first();
         if (joinDateElement != null) {
             joinDate = joinDateElement.attr("title");
         }
+        else {
+            joinDate = "Onbekend";
+        }
         location = document.select("span.ProfileHeaderCard-locationText").text();
+        if (location == "null") {
+            location = "Onbekend";
+        }
 
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
         String amountOfPicturesString = document.select("a.PhotoRail-headingWithCount").text().replaceAll("\\D+","");
@@ -86,7 +97,6 @@ public class ProfileGrabber {
         else {
             amountOfPictures = Integer.parseInt(amountOfPicturesString);
         }
-        System.out.println(verified);
     }
 
     public static void main(String[] args) {
