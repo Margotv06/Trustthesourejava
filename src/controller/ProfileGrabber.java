@@ -44,15 +44,37 @@ public class ProfileGrabber {
         else {
             verified = false;
         }
-
-        tweets = Integer.parseInt(document.select("span.ProfileNav-value").get(0).text().replaceAll("\\D+",""));
-        following = Integer.parseInt(document.select("span.ProfileNav-value").get(1).text().replaceAll("\\D+",""));
-        followers = Integer.parseInt(document.select("span.ProfileNav-value").get(2).text().replaceAll("\\D+",""));
-        likes = Integer.parseInt(document.select("span.ProfileNav-value").get(3).text().replaceAll("\\D+",""));
-
+        String tweetsString = document.select("span.ProfileNav-value").get(0).text();
+        if (tweetsString != "") {
+            tweets = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
+        }
+        else {
+            tweets = 0;
+        }
+        String followingString = document.select("span.ProfileNav-value").get(1).text();
+        if (followingString != "") {
+            following = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
+        }
+        else {
+            following = 0;
+        }
+        String followersString = document.select("span.ProfileNav-value").get(2).text();
+        if (followersString != "") {
+            followers = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
+        }
+        else {
+            followers = 0;
+        }
+        String likesString = document.select("span.ProfileNav-value").get(3).text();
+        if (likesString != "") {
+            likes = Integer.parseInt(tweetsString.replaceAll("\\D+",""));
+        }
+        else {
+            likes = 0;
+        }
         joinDate = document.select("span.ProfileHeaderCard-joinDateText").first().attr("title");
-
         location = document.select("span.ProfileHeaderCard-locationText").text();
+
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
         String amountOfPicturesString = document.select("a.PhotoRail-headingWithCount").text().replaceAll("\\D+","");
         if (amountOfPicturesString.equals("")) {
