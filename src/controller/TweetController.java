@@ -138,21 +138,36 @@ public class TweetController {
     }
 
     public void sendProfile(ProfileGrabber profileGrabber){
+
         String profileHtml =
-                    "<div class=\"tweet col-sm-12 col-md-12 col-lg-12 panel\">" +
+                    "<div class='tweet col-sm-12 col-md-12 col-lg-12 panel'>" +
                         //Profile Image
-                            "<div class=\"col-sm-2 col-md-2 col-lg-2\">" +
-                                "<img src='" + profileGrabber.getImageUrl() + "' alt='Picture'>" +
+                            "<div class='col-sm-2 col-md-2 col-lg-2'>" +
+                                "<img src='" + profileGrabber.getImageUrl().replace("400x400","bigger") + "' alt='Picture'>" +
                             "</div>" +
                             "<div class='col-sm-10 col-md-10 col-lg-10'>" +
                                 "<div class='col-sm-12 col-md-12 col-lg-12'>" +
                                     "<b>" + profileGrabber.getName()+"</b> " + profileGrabber.getProfile() + "-" +
                                 "</div>" +
-                                "<div>" +
-                                    "" +
+                                "<div class='col-sm-12 col-md-6 col-lg-6'>" +
+                                    "<div class='col-sm-12 col-md-12 col-lg-12'>" +
+                                        "Joined on: " + profileGrabber.getJoinDate() + "<br>" +
+                                        "Followers:" + profileGrabber.getFollowers() +"<br>" +
+                                        "Tweets:   " + profileGrabber.getTweets()+ "<br>" +
+                                    "</div>" +
                                 "</div>" +
                             "</div>" +
                     "</div>";
+        String script =
+                "<script>" +
+                    "$('#profile_area').append(\""+ profileHtml+"\")" +
+                "</script>" ;
+
+        try {
+            session.getRemote().sendString(script);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -163,19 +178,19 @@ public class TweetController {
             String tweethtml =
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
                         //Tweet Image
-                        "<div class='col-md-2 col-sm-2 col-lg-2'>" +
-                            "<img src='" + tweet.getPicture() + "' alt='Picture' onclick='searchProfile(\""+tweet.getUsername().substring(1)+" \")'>" +
+                        "<div class='col-md-2 col-sm-2 col-lg-2' id='tweetlink'>" +
+                            "<img src='" + tweet.getPicture() + "' alt='Picture' onclick='searchProfile(\""+tweet.getUsername().substring(1)+"\")'>" +
                         "</div>" +
                         //Tweet Body
-                        "<div class='col-md-10 col-sm-10 col-lg-10'>" +
-                            "<div class='col-md-12 col-lg-12 col-sm-12' onclick='searchProfile(\""+tweet.getUsername().substring(1)+"\")'>" +
+                        "<div class='col-md-10 col-sm-10 col-lg-10' >" +
+                            "<div class='col-md-12 col-lg-12 col-sm-12' id='tweetlink' onclick='searchProfile(\""+tweet.getUsername().substring(1)+"\")'>" +
                                 //Person / profile name
-                                "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + "-" +
+                                "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + " - <i>" +
                                 //Time
-                                "<div >" +
+
                                     new Date((long)tweet.getTime()*1000) +
-                                "</div>" +
-                            "</div>" +
+
+                            "</i></div>" +
                             "<div class='col-md-12 col-sm-12 col-lg-12'>" +
                                 tweet.getMessage() +
                             "</div>" +
