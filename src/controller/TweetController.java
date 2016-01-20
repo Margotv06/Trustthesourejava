@@ -134,13 +134,29 @@ public class TweetController {
     public void profileCrawler(String profileName) {
         profileGrabber = new ProfileGrabber(profileName);
         System.out.println("amount of likes: "+profileGrabber.getLikes());
+        sendProfile(profileGrabber);
+    }
+
+    public void sendProfile(ProfileGrabber profileGrabber){
+        String profileHtml =
+                    "<div class=\"tweet col-sm-12 col-md-12 col-lg-12 panel\">" +
+                        //Profile Image
+                            "<div class=\"col-sm-2 col-md-2 col-lg-2\">" +
+                                "<img src='" + profileGrabber.getImageUrl() + "' alt='Picture'>" +
+                            "</div>" +
+                            "<div class='col-sm-10 col-md-10 col-lg-10'>" +
+                                "<div class='col-sm-12 col-md-12 col-lg-12'>" +
+                                    "<b>" + profileGrabber.getName()+"</b> " + profileGrabber.getProfile() + "-" +
+                                "</div>" +
+                                "<div>" +
+                                    "" +
+                                "</div>" +
+                            "</div>" +
+                    "</div>";
     }
 
 
-
     public void sendTweet(Tweet tweet, String kind) {
-
-
         // sends the twitter message back to the web
         try{
 
@@ -148,11 +164,11 @@ public class TweetController {
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
                         //Tweet Image
                         "<div class='col-md-2 col-sm-2 col-lg-2'>" +
-                            "<img src='" + tweet.getPicture() + "' alt='Picture' onclick='searchProfile(\""+tweet.getUsername()+" \")'>" +
+                            "<img src='" + tweet.getPicture() + "' alt='Picture' onclick='searchProfile(\""+tweet.getUsername().substring(1)+" \")'>" +
                         "</div>" +
                         //Tweet Body
                         "<div class='col-md-10 col-sm-10 col-lg-10'>" +
-                            "<div class='col-md-12 col-lg-12 col-sm-12' onclick='searchProfile(\""+tweet.getUsername()+"\")'>" +
+                            "<div class='col-md-12 col-lg-12 col-sm-12' onclick='searchProfile(\""+tweet.getUsername().substring(1)+"\")'>" +
                                 //Person / profile name
                                 "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + "-" +
                                 //Time
