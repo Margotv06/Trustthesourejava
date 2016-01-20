@@ -1,9 +1,6 @@
 package controller;
-import model.IgnoreList;
 import model.Tweet;
-import org.json.JSONObject;
 import org.jsoup.nodes.*;
-import org.jsoup.select.Elements;
 
 import java.util.*;
 

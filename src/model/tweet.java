@@ -1,14 +1,10 @@
 package model;
 
-import controller.TweetGrabber;
 import org.eclipse.jetty.websocket.api.Session;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.* ;
-import java.util.Locale;
 
 /**
  * Created by  on 30-11-2015.
