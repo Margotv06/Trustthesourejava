@@ -151,17 +151,16 @@ public class TweetController {
                                 "<div class='col-sm-12 col-md-6 col-lg-6'>" +
                                     "<div class='col-sm-12 col-md-12 col-lg-12'>" +
                                         "Joined on: " + profileGrabber.getJoinDate() + "<br>" +
-                                        "Followers: " + profileGrabber.getFollowers() +"<br>" +
-                                        "Following: " + profileGrabber.getFollowing()+ "<br>" +
+                                        "Location:" + profileGrabber.getLocation() +"<br>" +
                                         "Tweets: " + profileGrabber.getTweets()+ "<br>" +
-                                        "Likes: " + profileGrabber.getLikes()+ "<br>" +
+
                                     "</div>" +
                                 "</div>" +
                                 "<div class='col-sm-12 col-md-6 col-lg-6'>" +
                                     "<div class='col-sm-12 col-md-12 col-lg-12'>" +
-                                        "Likes:    " + profileGrabber.getLikes() + "<br>" +
-                                        "Location:" + profileGrabber.getLocation() +"<br>" +
-                                        "Tweets:   " + profileGrabber.getFollowing()+ "<br>" +
+                                        "Followers: " + profileGrabber.getFollowers() +"<br>" +
+                                        "Following: " + profileGrabber.getFollowing()+ "<br>" +
+                                        "Likes:     " + profileGrabber.getLikes()+ "<br>" +
                                     "</div>" +
                                 "</div>" +
                             "</div>" +
