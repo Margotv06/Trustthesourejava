@@ -170,11 +170,9 @@ public class TweetController {
                     "$('#profile_area').append(\""+ profileHtml+"\")" +
                 "</script>" ;
 
-        try {
-            session.getRemote().sendString(script);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        session.getRemote().sendStringByFuture(script);
+
     }
 
 
