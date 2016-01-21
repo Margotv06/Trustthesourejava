@@ -91,7 +91,7 @@ public class ProfileGrabber {
         }
         // Sets the location
         location = document.select("span.ProfileHeaderCard-locationText").text();
-        if (location == "null" || location == "") {
+        if (!document.select("span.ProfileHeaderCard-locationText").hasText()) {
             location = "Onbekend";
         }
 

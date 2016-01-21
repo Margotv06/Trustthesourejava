@@ -157,46 +157,13 @@ public class Tweet
         }
         return links;
     }
-    private String month(String month) {
-        switch(month) {
-            case "jan.":
-                return "January";
-            case "feb.":
-                return "February";
-            case "mar.":
-                return "March";
-            case "apr.":
-                return "April";
-            case "may.":
-                return "May";
-            case "jun.":
-                return "June";
-            case "jul.":
-                return "July";
-            case "aug.":
-                return "August";
-            case "sep.":
-                return "September";
-            case "oct.":
-                return "October";
-            case "nov.":
-                return "November";
-            case "dec.":
-                return "December";
-        }
-        return "";
-    }
     /*
-    Search for the username of the tweet
+    Getters
      */
     private String picture() {
         return IgnoreList.getInfo("picture", doc, position).attr("src");
     }
-
-    public String getPicture() {
-
-        return picture;
-    }
+    public String getPicture() { return picture; }
     public String getMessage(){
         return message;
     }
@@ -221,6 +188,5 @@ public class Tweet
     public ArrayList<String> getHashtag() {
         return hashtag;
     }
-
     public ArrayList<String> getMessageWords() { return messageWords;}
 }
