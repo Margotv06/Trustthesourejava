@@ -21,7 +21,6 @@ public class TweetController {
     private Thread tweetControllerThread;
     private TweetControllerThread controllerClass;
     private Session session;
-    //private List<JSONObject> grabberCommand = Collections.synchronizedList(new LinkedList<JSONObject>());
     private Stack<JSONObject> grabberCommand = new Stack<>();
     private LinkedList<Document> documents;
 
@@ -29,15 +28,17 @@ public class TweetController {
         tweets = new ArrayList<Tweet>();
         documents = new LinkedList<Document>();
 
-
-
+        // setting up the Threads used for tweet collection
         controllerClass = new TweetControllerThread(documents, this);
-
         tweetControllerThread = new Thread(controllerClass);
         tweetControllerThread.start();
         tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
         tweetGrabber.start();
     }
+    /*
+    method for setting the session.
+    This method gets called when the program is booted
+     */
     public void setSession(Session session) {
         this.session = session;
     }
@@ -51,12 +52,16 @@ public class TweetController {
         tweetGrabber.interrupt();
     }
 
-
-
+    /*
+    Calls the closeSession(String) method with a standard parameter
+     */
     public void closeSession() {
         closeSession("Tweet gathering has stopped");
     }
 
+    /*
+    Closes all the threads
+     */
     public void closeAll() {
         tweetControllerThread.interrupt();
         tweetGrabber.interrupt();
@@ -67,6 +72,7 @@ public class TweetController {
         grabberCommand.add(command);
         controllerClass.setLimit(tweetsToGather);
     }
+
     /*
     send everything back to the web in reverse
      */
@@ -81,8 +87,6 @@ public class TweetController {
     Method for sending a string back to the web
      */
     public boolean sendMessage(String message, String kind) {
-
-
         // sends the twitter message back to the web
         try{
 
@@ -136,6 +140,9 @@ public class TweetController {
         sendProfile(profileGrabber);
     }
 
+    /*
+    Sends a profile back to trustthesource.nl
+     */
     public void sendProfile(ProfileGrabber profileGrabber){
 
         String profileHtml =
@@ -169,17 +176,15 @@ public class TweetController {
                 "<script>" +
                     "$('#profile_area').append(\""+ profileHtml+"\")" +
                 "</script>" ;
-
-
         session.getRemote().sendStringByFuture(script);
 
     }
 
-
+    /*
+    Sends a tweet back to trustthesource.nl
+     */
     public void sendTweet(Tweet tweet, String kind) {
         // sends the twitter message back to the web
-
-
             String tweethtml =
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
                         //Tweet Image
@@ -192,9 +197,7 @@ public class TweetController {
                                 //Person / profile name
                                 "<b>" + tweet.getProfilename()+"</b> " + tweet.getUsername() + " - <i>" +
                                 //Time
-
                                     new Date((long)tweet.getTime()*1000) +
-
                             "</i></div>" +
                             "<div class='col-md-12 col-sm-12 col-lg-12'>" +
                                 tweet.getMessage() +
@@ -206,14 +209,21 @@ public class TweetController {
                         "</div>" +
                     "</div>";
             session.getRemote().sendStringByFuture(tweethtml);
-
     }
+    /*
+    Adds a tweet to the tweet array
+     */
     public void addTweet(Tweet tweet) {
         tweets.add(tweet);
     }
+
+    /*
+    returns the size of the tweet array
+     */
     public int getTweetsSize(){
         return tweets.size();
     }
+
     /*
     waits
      */

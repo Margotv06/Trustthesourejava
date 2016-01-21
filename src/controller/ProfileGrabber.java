@@ -14,7 +14,6 @@ public class ProfileGrabber {
     private String profile;
     private String name;
     private boolean verified;
-
     private int tweets;
     private int following;
     private int followers;
@@ -30,8 +29,11 @@ public class ProfileGrabber {
             document = Jsoup.connect("http://twitter.com/"+profile).get();
         } catch(IOException e){}
         getProfileInfo();
-
     }
+
+    /*
+    Method for getting all the profile info
+     */
     private void getProfileInfo() {
         Element nameElement = document.select("a.ProfileHeaderCard-nameLink").first();
         if (nameElement != null) {
@@ -51,6 +53,8 @@ public class ProfileGrabber {
         likes = 0;
         tweets = 0;
         following = 0;
+
+        // Getting the elements for getting the amount of followers, likes, tweets and following
         Elements barValue = document.select("span.ProfileNav-value");
         Elements barLabel = document.select("span.ProfileNav-label");
 
@@ -77,6 +81,7 @@ public class ProfileGrabber {
 
         }
 
+        // Sets the joinDate
         Element joinDateElement = document.select("span.ProfileHeaderCard-joinDateText").first();
         if (joinDateElement != null) {
             joinDate = joinDateElement.attr("title");
@@ -84,11 +89,13 @@ public class ProfileGrabber {
         else {
             joinDate = "Onbekend";
         }
+        // Sets the location
         location = document.select("span.ProfileHeaderCard-locationText").text();
         if (location == "null" || location == "") {
             location = "Onbekend";
         }
 
+        // Sets the profile picture url
         imageUrl = document.select("img.ProfileAvatar-image").attr("src");
         String amountOfPicturesString = document.select("a.PhotoRail-headingWithCount").text().replaceAll("\\D+","");
         if (amountOfPicturesString.equals("")) {
@@ -99,43 +106,33 @@ public class ProfileGrabber {
         }
     }
 
-    public static void main(String[] args) {
-        new ProfileGrabber("barackobama");
-    }
-
-
+    /*
+    Getters
+     */
     public String getProfile() {
         return profile;
     }
-
     public Document getDocument() {
         return document;
     }
-
     public int getTweets() {
         return tweets;
     }
-
     public int getFollowing() {
         return following;
     }
-
     public int getFollowers() {
         return followers;
     }
-
     public int getLikes() {
         return likes;
     }
-
     public String getJoinDate() {
         return joinDate;
     }
-
     public String getLocation() {
         return location;
     }
-
     public String getImageUrl() {
         return imageUrl;
     }
