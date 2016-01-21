@@ -178,7 +178,7 @@ public class TweetController {
 
     public void sendTweet(Tweet tweet, String kind) {
         // sends the twitter message back to the web
-        try{
+
 
             String tweethtml =
                     "<div class='tweet col-md-12 col-sm-12 col-lg-12 panel '>" +
@@ -205,11 +205,8 @@ public class TweetController {
                             "</div>" +
                         "</div>" +
                     "</div>";
-            session.getRemote().sendString(tweethtml);
-        }
-        catch (IOException e){
-            System.err.println(e);
-        }
+            session.getRemote().sendStringByFuture(tweethtml);
+
     }
     public void addTweet(Tweet tweet) {
         tweets.add(tweet);
