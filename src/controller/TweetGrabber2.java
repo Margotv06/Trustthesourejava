@@ -28,9 +28,11 @@ public class TweetGrabber2 implements Runnable {
     private String search;
     private Thread grabber;
     private final String LINK = "https://www.twitter.com/",
-            SEARCH = "search?f=tweets&q=",
+            SEARCH = "search?",
+            LIVETWEET = "f=tweets&",
             // Here needs to be a search question
             SRC = "&src=typd";
+
     private Document document;
     private LinkedList<Document> documents;
 
@@ -84,7 +86,7 @@ public class TweetGrabber2 implements Runnable {
 
                 if (command.has("GET")) {
                     System.out.println("TEST: starting first fetch");
-                    getFirstDoc();
+                    getFirstDoc(command.get("LIVETWEET"));
                     if (command.get("GET").equals("ALL")) {
                         grabber = new Thread(new TweetContinueGrabber(search, document, documents));
                         grabber.start();
@@ -102,10 +104,16 @@ public class TweetGrabber2 implements Runnable {
         }
     }
 
-    private void getFirstDoc() {
+    private void getFirstDoc(Object livetweet) {
         try {
-            System.out.println(LINK + SEARCH + search + SRC);
-            document = Jsoup.connect(LINK + SEARCH + search + SRC).get();
+            System.out.println("LIVETWEET:"+livetweet);
+            if(livetweet.equals("TRUE")){
+                System.out.println(LINK + SEARCH + LIVETWEET + "q="+ search + SRC);
+                document = Jsoup.connect(LINK + SEARCH + LIVETWEET + "q=" + search + SRC).get();
+            }else{
+                System.out.println(LINK + SEARCH + search + SRC);
+                document = Jsoup.connect(LINK + SEARCH + search + SRC).get();
+            }
             addDocument(document);
         } catch (IOException e) {
             e.printStackTrace();
