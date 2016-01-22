@@ -112,7 +112,8 @@ public class TweetGrabber2 implements Runnable {
                 document = Jsoup.connect(LINK + SEARCH + LIVETWEET + "q=" + search + SRC).get();
             }else{
                 System.out.println(LINK + SEARCH + search + SRC);
-                document = Jsoup.connect(LINK + SEARCH + search + SRC).get();
+                document = Jsoup.connect(LINK + SEARCH + search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com").get();
             }
             addDocument(document);
         } catch (IOException e) {
@@ -201,10 +202,24 @@ class TweetContinueGrabber implements Runnable{
     }
 
     private String getMinPos(Document document){
+        String position = null;
         if(document.getElementsByAttribute("data-min-position").attr("data-min-position")!=null){
-            return document.getElementsByAttribute("data-min-position").attr("data-min-position");
+            position = document.getElementsByAttribute("data-min-position").attr("data-min-position").toString();
+        }else {
+            position = document.getElementsByAttribute("data-max-position").attr("data-max-position").toString();
         }
-        return document.getElementsByAttribute("data-max-position").attr("data-max-position");
+        if(!position.equals("TWEET--")){
+            return position;
+        }else {
+            //System.out.println(document.toString());
+            System.out.println("Empty Pos fix, Old:"+position);
+            position = null;
+            position = document.getElementsByClass("stream-container").attr("data-max-position").toString();
+            System.out.println("new:"+position);
+            return position;
+        }
+
+
     }
     private static String readAll(Reader reader) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
