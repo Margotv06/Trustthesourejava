@@ -48,6 +48,7 @@ public class WebClientConn {
     @OnWebSocketMessage
     public void onMessage(Session session, String command){
         try {
+            System.out.println(command);
             JSONObject jsonObject = new JSONObject(command);
             String commands = jsonObject.get("COMMAND").toString();
             System.out.println(commands);
