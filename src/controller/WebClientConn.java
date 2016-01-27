@@ -93,7 +93,14 @@ public class WebClientConn {
                     tweetController.closeSession();
                     break;
                 case "end":
+                    String rereverse = "<div class='hidden'>re-end</div>";
+                    session.getRemote().sendString(rereverse);
                     tweetController.sendBack();
+                    break;
+                case "start":
+                    String reverse = "<div class='hidden'>end</div>";
+                    session.getRemote().sendString(reverse);
+                    tweetController.sendStart();
                     break;
                 case "profile":
                     String profileName = jsonObject.get("NAME").toString();

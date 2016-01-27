@@ -1,5 +1,8 @@
 package controller;
 import model.Tweet;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 
 import java.util.*;
@@ -9,11 +12,11 @@ import java.util.*;
  */
 public class TweetControllerThread implements Runnable {
     private int tweetGathered;
-    private LinkedList<Document> documents;
+    private LinkedList<JSONObject> documents;
     private TweetController tweetController;
     private int tweetsToGather;
 
-    public TweetControllerThread(LinkedList<Document> documents, TweetController tweetController) {
+    public TweetControllerThread(LinkedList<JSONObject> documents, TweetController tweetController) {
         this.documents = documents;
         this.tweetController = tweetController;
         tweetsToGather = 0;
@@ -41,7 +44,16 @@ public class TweetControllerThread implements Runnable {
     Handles the incoming DOM
      */
     private void handleDoc() {
-        Document doc = documents.pop();
+        Document doc = new Document("");
+        try {
+
+            JSONObject jdoc =  documents.pop();
+            String html_content = jdoc.get("items_html").toString();
+            doc = Jsoup.parse(html_content);
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
         // loop over every tweet in the DOM
         for(int i =0 ; i< doc.select(".js-tweet-text.tweet-text").size();i++) {
             // make a tweet.java instance from the tweet
@@ -50,11 +62,12 @@ public class TweetControllerThread implements Runnable {
             tweetController.addTweet(tweet);
             waiting(50);
             tweetController.sendTweet(tweet, "tweet");
-
         }
         // Sends a string back to the terminal of the web
         System.out.println("Amount of tweets gathered: "+tweetController.getTweetsSize());
+        //System.out.println(doc.toString());
         if (tweetGathered == tweetController.getTweetsSize()) {
+            System.out.println("Tweet gathering has closed because the crawler cant find anymore tweets");
             tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
         }
         tweetGathered = tweetController.getTweetsSize();

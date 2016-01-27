@@ -22,11 +22,11 @@ public class TweetController {
     private TweetControllerThread controllerClass;
     private Session session;
     private Stack<JSONObject> grabberCommand = new Stack<>();
-    private LinkedList<Document> documents;
+    private LinkedList<JSONObject> documents;
 
     public TweetController() {
         tweets = new ArrayList<Tweet>();
-        documents = new LinkedList<Document>();
+        documents = new LinkedList<JSONObject>();
 
         // setting up the Threads used for tweet collection
         controllerClass = new TweetControllerThread(documents, this);
@@ -78,6 +78,12 @@ public class TweetController {
      */
     public void sendBack() {
         for (int i=tweets.size()-1; i > 0; i--) {
+            sendTweet(tweets.get(i), "tweet");
+            //waiting(1);
+        }
+    }
+    public void sendStart() {
+        for (int i=0; i<tweets.size()-1; i++) {
             sendTweet(tweets.get(i), "tweet");
             //waiting(1);
         }
