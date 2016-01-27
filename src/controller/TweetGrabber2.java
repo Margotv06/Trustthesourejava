@@ -29,7 +29,7 @@ public class TweetGrabber2 implements Runnable {
     private Thread grabber;
     private final String LINK = "https://www.twitter.com/",
             SEARCH = "search?",
-            LIVETWEET = "f=tweets&",
+            LIVETWEET = "&f=tweets",
             // Here needs to be a search question
             SRC = "&src=typd";
 
@@ -108,12 +108,12 @@ public class TweetGrabber2 implements Runnable {
         try {
             System.out.println("LIVETWEET:"+livetweet);
             if(livetweet.equals("TRUE")){
-                System.out.println(LINK + SEARCH + LIVETWEET + "q="+ search + SRC);
-                document = Jsoup.connect(LINK + SEARCH + LIVETWEET + "q=" + search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                System.out.println(LINK + SEARCH + LIVETWEET + "&q="+ search + SRC);
+                document = Jsoup.connect(LINK + SEARCH + LIVETWEET + "&q=" + search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                         .referrer("http://www.google.com").get();
             }else{
                 System.out.println(LINK + SEARCH + search + SRC);
-                document = Jsoup.connect(LINK + SEARCH + search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                document = Jsoup.connect(LINK + SEARCH + "q="+search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                         .referrer("http://www.google.com").get();
             }
             JSONObject jdocument = new JSONObject();
@@ -173,7 +173,7 @@ class TweetContinueGrabber implements Runnable{
         System.out.println("TweetContinueGrabber Inititalized");
         if(document!=null){
             System.out.println("Has Document");
-            //System.out.println(document.toString());
+            System.out.println(document.toString());
         }
         newest_tweet = document.getElementsByClass("tweet").attr("data-item-id").toString();
         System.out.println("newest ID: "+newest_tweet);
