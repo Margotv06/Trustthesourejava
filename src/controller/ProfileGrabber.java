@@ -112,6 +112,8 @@ public class ProfileGrabber {
     public String getProfile() {
         return profile;
     }
+    public boolean getVerified() { return verified;}
+    public int getAmountOfPictures() { return amountOfPictures;}
     public Document getDocument() {
         return document;
     }

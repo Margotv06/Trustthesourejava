@@ -1,8 +1,5 @@
 package controller;
 import model.Tweet;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 
 import java.util.*;
@@ -13,6 +10,7 @@ import java.util.*;
 public class TweetControllerThread implements Runnable {
     private int tweetGathered;
     private LinkedList<JSONObject> documents;
+    private int tweetGathered2;
     private TweetController tweetController;
     private int tweetsToGather;
 
@@ -21,6 +19,7 @@ public class TweetControllerThread implements Runnable {
         this.tweetController = tweetController;
         tweetsToGather = 0;
         tweetGathered = 0;
+        tweetGathered2 = 0;
     }
     @Override
     public void run() {
@@ -62,13 +61,18 @@ public class TweetControllerThread implements Runnable {
             tweetController.addTweet(tweet);
             waiting(50);
             tweetController.sendTweet(tweet, "tweet");
+
         }
         // Sends a string back to the terminal of the web
         System.out.println("Amount of tweets gathered: "+tweetController.getTweetsSize());
-        //System.out.println(doc.toString());
         if (tweetGathered == tweetController.getTweetsSize()) {
-            System.out.println("Tweet gathering has closed because the crawler cant find anymore tweets");
-            tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
+            if (tweetGathered2 == tweetGathered2) {
+                System.out.println("closed session");
+                tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
+            }
+        }
+        if (tweetGathered != 0) {
+            tweetGathered2 = tweetGathered;
         }
         tweetGathered = tweetController.getTweetsSize();
     }
