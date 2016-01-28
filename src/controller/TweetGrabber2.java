@@ -15,6 +15,19 @@ import java.util.Stack;
 
 import org.json.JSONObject;
 
+/**
+ *    ______                __  __  __        _____
+ *   /_  __/______  _______/ /_/ /_/ /_  ___ / ___/____  __  _______________
+ *    / / / ___/ / / / ___/ __/ __/ __ \/ _ \\__ \/ __ \/ / / / ___/ ___/ _ \
+ *   / / / /  / /_/ (__  ) /_/ /_/ / / /  __/__/ / /_/ / /_/ / /  / /__/  __/
+ *  /_/ /_/   \__,_/____/\__/\__/_/ /_/\___/____/\____/\__,_/_/   \___/\___/
+ *
+ *  This is the TrusttheSource Grabber, it's responsible for taking the tweets from the twitter pages and putting
+ *  them in a list.
+ *
+ *
+ */
+
 
 
 /**

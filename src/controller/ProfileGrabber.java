@@ -7,6 +7,18 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 /**
+ *    ______                __  __  __        _____
+ *   /_  __/______  _______/ /_/ /_/ /_  ___ / ___/____  __  _______________
+ *    / / / ___/ / / / ___/ __/ __/ __ \/ _ \\__ \/ __ \/ / / / ___/ ___/ _ \
+ *   / / / /  / /_/ (__  ) /_/ /_/ / / /  __/__/ / /_/ / /_/ / /  / /__/  __/
+ *  /_/ /_/   \__,_/____/\__/\__/_/ /_/\___/____/\____/\__,_/_/   \___/\___/
+ *
+ *  This is the class that is responsible for grabbing the informating on twitter profiles
+ *
+ *
+ */
+
+/**
  * Created by daant on 15-Jan-16.
  */
 public class ProfileGrabber {
