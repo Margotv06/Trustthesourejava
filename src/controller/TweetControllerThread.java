@@ -34,8 +34,8 @@ public class TweetControllerThread implements Runnable {
         this.documents = documents;
         this.tweetController = tweetController;
         tweetsToGather = 0;
-        tweetGathered = 0;
-        tweetGathered2 = 0;
+        tweetGathered = 1;
+        tweetGathered2 = 2;
     }
     @Override
     public void run() {
@@ -83,8 +83,8 @@ public class TweetControllerThread implements Runnable {
         System.out.println("Amount of tweets gathered: "+tweetController.getTweetsSize());
         if (tweetGathered == tweetController.getTweetsSize()) {
             if (tweetGathered2 == tweetGathered2) {
-                System.out.println("closed session");
-                tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
+                //System.out.println("Tweet gathering has closed because the crawler cant find anymore tweets");
+                //tweetController.closeSession("Tweet gathering has closed because the crawler cant find anymore tweets");
             }
         }
         if (tweetGathered != 0) {

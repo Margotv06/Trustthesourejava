@@ -32,6 +32,7 @@ public class TweetController {
     private HashMap<String,ArrayList<Tweet>> keywords;
     private Thread tweetGrabber;
     private Thread tweetControllerThread;
+    private Thread keepAlive;
     private TweetControllerThread controllerClass;
     private Session session;
     private Stack<JSONObject> grabberCommand = new Stack<>();
@@ -41,12 +42,16 @@ public class TweetController {
         tweets = new ArrayList<Tweet>();
         documents = new LinkedList<JSONObject>();
 
+        keepAlive = new Thread(new KeepAlive(this));
+        keepAlive.start();
+
         // setting up the Threads used for tweet collection
         controllerClass = new TweetControllerThread(documents, this);
         tweetControllerThread = new Thread(controllerClass);
         tweetControllerThread.start();
         tweetGrabber = new Thread(new TweetGrabber2(grabberCommand, documents));
         tweetGrabber.start();
+
     }
     /*
     method for setting the session.
@@ -117,6 +122,10 @@ public class TweetController {
                     String reply =
                             "<div class='hidden'>end</div>";
                     session.getRemote().sendString(reply);
+                    break;
+                case "keepalive":
+                    String reply2 = "<div class='hidden'></div>";
+                    session.getRemote().sendString(reply2);
                     break;
             }
 

@@ -119,7 +119,7 @@ public class TweetGrabber2 implements Runnable {
 
     private void getFirstDoc(Object livetweet) {
         try {
-            System.out.println("LIVETWEET:"+livetweet);
+            //System.out.println("LIVETWEET:"+livetweet);
             if(livetweet.equals("TRUE")){
                 System.out.println(LINK + SEARCH + LIVETWEET + "&q="+ search + SRC);
                 document = Jsoup.connect(LINK + SEARCH + LIVETWEET + "&q=" + search + SRC).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
@@ -176,7 +176,7 @@ class TweetContinueGrabber implements Runnable{
         this.document = document;
         counted = document.select(".js-tweet-text.tweet-text").size();
         try{
-            System.out.println(documents.peek().keys().toString());
+            //System.out.println(documents.peek().keys().toString());
             minpos = getMinPos(Jsoup.parse(
                     documents.peek().get("items_html").toString()));
         }
@@ -186,17 +186,17 @@ class TweetContinueGrabber implements Runnable{
         System.out.println("TweetContinueGrabber Inititalized");
         if(document!=null){
             System.out.println("Has Document");
-            System.out.println(document.toString());
+            //System.out.println(document.toString());
         }
         newest_tweet = document.getElementsByClass("tweet").attr("data-item-id").toString();
-        System.out.println("newest ID: "+newest_tweet);
+        //System.out.println("newest ID: "+newest_tweet);
         for(int i=0;i<document.getElementsByClass("tweet").size();i++){
             if((document.getElementsByClass("tweet").get(i).attr("data-item-id").toString())!=null&&document.getElementsByClass("tweet").get(i).attr("data-item-id").toString()!=""){
                 oldest_tweet = document.getElementsByClass("tweet").get(i).attr("data-item-id").toString();
             }
         }
 
-        System.out.println("oldest ID: "+oldest_tweet);
+        //System.out.println("oldest ID: "+oldest_tweet);
     }
 
     public void run() {
@@ -219,7 +219,7 @@ class TweetContinueGrabber implements Runnable{
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
                 String jsonText = readAll(bufferedReader);
                 JSONObject jsonObject = new JSONObject(jsonText);
-                System.out.println(jsonText);
+                //System.out.println(jsonText);
                 try {
                     minpos = "&max_position="+ jsonObject.get("max_position").toString();
                 } catch (JSONException e) {
@@ -236,7 +236,7 @@ class TweetContinueGrabber implements Runnable{
                 toStack(jsonObject);
 
                 if(jsonObject.get("has_more_items").toString()=="false"){
-                    System.out.println("has no new items");
+                    //System.out.println("has no new items");
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -264,10 +264,10 @@ class TweetContinueGrabber implements Runnable{
             return position;
         }else {
             //System.out.println(document.toString());
-            System.err.println("Empty Pos fix, Old:"+position);
+            //System.err.println("Empty Pos fix, Old:"+position);
             position = null;
             position = document.getElementsByClass("stream-container").attr("data-max-position").toString();
-            System.err.println("new:"+position);
+            //System.err.println("new:"+position);
             return position;
         }
 
